@@ -16,6 +16,8 @@ import org.talend.daikon.schema.internal.DataSchemaElement;
 import org.talend.daikon.schema.internal.SchemaImpl;
 
 import com.cedarsoftware.util.io.JsonReader;
+import org.talend.daikon.schema.type.ExternalBaseType;
+import org.talend.daikon.schema.type.TypeMapping;
 
 /**
  * Make objects that are related to the schemas.
@@ -35,6 +37,15 @@ public class SchemaFactory {
     public static SchemaElement newSchemaElement(String name) {
         SchemaElement se = new DataSchemaElement();
         se.setName(name);
+        return se;
+    }
+
+    public static DataSchemaElement newDataSchemaElement(String familyName, String name, Class<? extends ExternalBaseType> appType) {
+        DataSchemaElement se = new DataSchemaElement();
+        se.setAppColName(name);
+        se.setAppColType(appType);
+        se.setName(name);
+        se.setType(TypeMapping.getDefaultTalendType(familyName, appType));
         return se;
     }
 

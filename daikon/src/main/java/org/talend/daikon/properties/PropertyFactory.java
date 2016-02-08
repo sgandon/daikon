@@ -39,6 +39,12 @@ public class PropertyFactory {
         return new Property(SchemaElement.Type.STRING, name);
     }
 
+    public static Property newString(String name, String defaultValue) {
+        Property property = newString(name);
+        property.setDefaultValue(defaultValue);
+        return property;
+    }
+
     public static Property newInteger(String name) {
         return new Property(SchemaElement.Type.INT, name);
     }
@@ -51,6 +57,12 @@ public class PropertyFactory {
 
     public static Property newInteger(String name, Integer defaultValue) {
         return newInteger(name, defaultValue.toString());
+    }
+
+    public static Property newLong(String name, Long defaultValue) {
+        Property property = new Property(SchemaElement.Type.LONG, name);
+        property.setDefaultValue(String.valueOf(defaultValue));
+        return property;
     }
 
     public static Property newDouble(String name) {
@@ -107,6 +119,16 @@ public class PropertyFactory {
         Property property = new Property(SchemaElement.Type.ENUM, name);
         property.setPossibleValues(values);
         return property;
+    }
+
+    public static Property newTable(String name, Property... properties) {
+        Property table = newProperty(name);
+        table.setOccurMaxTimes(SchemaElement.INFINITE);
+        table.setChildren(null);
+        for (Property property : properties) {
+            table.addChild(property);
+        }
+        return table;
     }
 
 }

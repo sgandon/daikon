@@ -32,8 +32,8 @@ public class SchemaElementTest {
      */
     @Test
     public void testEnum() {
-        List<String> ref = Arrays.asList("STRING", "BOOLEAN", "INT", "DATE", "DATETIME", "DECIMAL", "FLOAT", "DOUBLE",
-                "BYTE_ARRAY", "ENUM", "DYNAMIC", "GROUP", "SCHEMA");
+        List<String> ref = Arrays.asList("STRING", "BOOLEAN", "BYTE", "SHORT", "INT", "LONG", "DATE", "DATETIME", "DECIMAL", "FLOAT", "DOUBLE",
+                "BYTE_ARRAY", "ENUM", "OBJECT", "CHARACTER", "LIST", "DYNAMIC", "GROUP", "SCHEMA");
         List<SchemaElement.Type> types = Arrays.asList(SchemaElement.Type.values());
         assertEquals(ref.size(), types.size());
         assertEquals(ref.toString(), types.toString());

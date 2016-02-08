@@ -26,7 +26,10 @@ public interface SchemaElement extends NamedThing, ToStringIndent {
     public enum Type {
         STRING,
         BOOLEAN,
+        BYTE,
+        SHORT,
         INT,
+        LONG,
         DATE,
         DATETIME,
         DECIMAL,
@@ -34,6 +37,9 @@ public interface SchemaElement extends NamedThing, ToStringIndent {
         DOUBLE,
         BYTE_ARRAY,
         ENUM,
+        OBJECT,
+        CHARACTER,
+        LIST,
         DYNAMIC,
         GROUP,
         SCHEMA
