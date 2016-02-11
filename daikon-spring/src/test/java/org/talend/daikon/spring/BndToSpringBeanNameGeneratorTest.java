@@ -27,7 +27,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  * created by sgandon on 18 nov. 2015
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ComponentScan(basePackages = "org.talend.daikon.spring", nameGenerator = BndToSpringBeanNameGenerator.class, includeFilters = @ComponentScan.Filter(type = FilterType.ANNOTATION, classes = aQute.bnd.annotation.component.Component.class) , excludeFilters = @ComponentScan.Filter(type = FilterType.REGEX, pattern = ".*Osgi") )
+@ComponentScan(basePackages = "org.talend.daikon.spring", nameGenerator = BndToSpringBeanNameGenerator.class, includeFilters = @ComponentScan.Filter(type = FilterType.ANNOTATION, classes = aQute.bnd.annotation.component.Component.class), excludeFilters = @ComponentScan.Filter(type = FilterType.REGEX, pattern = ".*Osgi"))
 @SpringApplicationConfiguration(classes = BndToSpringBeanNameGeneratorTest.class)
 public class BndToSpringBeanNameGeneratorTest {
 

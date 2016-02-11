@@ -9,11 +9,11 @@ package org.talend.daikon.schema.type;
  */
 public interface ExternalBaseType<SpecificT, KnownT, ReadContainerT, WriteContainerT> {
 
-    public SpecificT readValue(ReadContainerT obj, String key);
-
-    public void writeValue(WriteContainerT app, String key, SpecificT value);
-
     public SpecificT convertFromKnown(KnownT value);
 
     public KnownT convertToKnown(SpecificT value);
+
+    public SpecificT readValue(ReadContainerT obj, String key);
+
+    public void writeValue(WriteContainerT app, String key, SpecificT value);
 }

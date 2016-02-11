@@ -17,8 +17,8 @@ import static org.junit.Assert.*;
 import java.util.Arrays;
 
 import org.junit.Test;
-import org.talend.daikon.schema.SchemaElement;
-import org.talend.daikon.schema.SchemaElement.Type;
+import org.talend.daikon.schema.MakoElement;
+import org.talend.daikon.schema.MakoElement.Type;
 
 /**
  * created by pbailly on 4 Dec 2015 Detailled comment
@@ -28,7 +28,7 @@ public class PropertyFactoryTest {
 
     @Test
     public void testNewProperty() {
-        SchemaElement element = PropertyFactory.newProperty("testProperty");
+        MakoElement element = PropertyFactory.newProperty("testProperty");
         assertEquals("testProperty", element.getName());
         assertNull(element.getDefaultValue());
         assertNull(element.getTitle());
@@ -37,7 +37,7 @@ public class PropertyFactoryTest {
 
     @Test
     public void testNewProperty_WithTtitle() {
-        SchemaElement element = PropertyFactory.newProperty("testProperty", "title");
+        MakoElement element = PropertyFactory.newProperty("testProperty", "title");
         assertEquals("testProperty", element.getName());
         assertNull(element.getDefaultValue());
         assertEquals("title", element.getTitle());
@@ -47,7 +47,7 @@ public class PropertyFactoryTest {
 
     @Test
     public void testNewProperty_WithTypeAndTitle() {
-        SchemaElement element = PropertyFactory.newProperty(Type.BOOLEAN, "testProperty", "title");
+        MakoElement element = PropertyFactory.newProperty(Type.BOOLEAN, "testProperty", "title");
         assertEquals("testProperty", element.getName());
         assertNull(element.getDefaultValue());
         assertEquals("title", element.getTitle());
@@ -56,7 +56,7 @@ public class PropertyFactoryTest {
 
     @Test
     public void testNewProperty_WithType() {
-        SchemaElement element = PropertyFactory.newProperty(Type.BOOLEAN, "testProperty");
+        MakoElement element = PropertyFactory.newProperty(Type.BOOLEAN, "testProperty");
         assertEquals("testProperty", element.getName());
         assertNull(element.getDefaultValue());
         assertNull(element.getTitle());
@@ -65,7 +65,7 @@ public class PropertyFactoryTest {
 
     @Test
     public void testNewString() {
-        SchemaElement element = PropertyFactory.newString("testProperty");
+        MakoElement element = PropertyFactory.newString("testProperty");
         assertEquals("testProperty", element.getName());
         assertNull(element.getDefaultValue());
         assertNull(element.getTitle());
@@ -74,7 +74,7 @@ public class PropertyFactoryTest {
 
     @Test
     public void testNewInteger() {
-        SchemaElement element = PropertyFactory.newInteger("testProperty");
+        MakoElement element = PropertyFactory.newInteger("testProperty");
         assertEquals("testProperty", element.getName());
         assertNull(element.getDefaultValue());
         assertNull(element.getTitle());
@@ -83,7 +83,7 @@ public class PropertyFactoryTest {
 
     @Test
     public void testNewInteger_defaultvalueString() {
-        SchemaElement element = PropertyFactory.newInteger("testProperty", "10");
+        MakoElement element = PropertyFactory.newInteger("testProperty", "10");
         assertEquals("testProperty", element.getName());
         assertEquals("10", element.getDefaultValue());
         assertNull(element.getTitle());
@@ -92,7 +92,7 @@ public class PropertyFactoryTest {
 
     @Test
     public void testNewInteger_defaultvalueInteger() {
-        SchemaElement element = PropertyFactory.newInteger("testProperty", 10);
+        MakoElement element = PropertyFactory.newInteger("testProperty", 10);
         assertEquals("testProperty", element.getName());
         assertEquals("10", element.getDefaultValue());
         assertNull(element.getTitle());
@@ -101,7 +101,7 @@ public class PropertyFactoryTest {
 
     @Test
     public void testNewFloat() {
-        SchemaElement element = PropertyFactory.newFloat("testProperty");
+        MakoElement element = PropertyFactory.newFloat("testProperty");
         assertEquals("testProperty", element.getName());
         assertNull(element.getDefaultValue());
         assertNull(element.getTitle());
@@ -110,7 +110,7 @@ public class PropertyFactoryTest {
 
     @Test
     public void testNewFloat_defaultvalue() {
-        SchemaElement element = PropertyFactory.newFloat("testProperty", 5f);
+        MakoElement element = PropertyFactory.newFloat("testProperty", 5f);
         assertEquals("testProperty", element.getName());
         assertEquals("5.0", element.getDefaultValue());
         assertNull(element.getTitle());
@@ -119,7 +119,7 @@ public class PropertyFactoryTest {
 
     @Test
     public void testNewFloat_StringDefaultvalue() {
-        SchemaElement element = PropertyFactory.newFloat("testProperty", "5f");
+        MakoElement element = PropertyFactory.newFloat("testProperty", "5f");
         assertEquals("testProperty", element.getName());
         assertEquals("5f", element.getDefaultValue());
         assertNull(element.getTitle());
@@ -128,7 +128,7 @@ public class PropertyFactoryTest {
 
     @Test
     public void testNewDouble() {
-        SchemaElement element = PropertyFactory.newDouble("testProperty");
+        MakoElement element = PropertyFactory.newDouble("testProperty");
         assertEquals("testProperty", element.getName());
         assertNull(element.getDefaultValue());
         assertNull(element.getTitle());
@@ -137,7 +137,7 @@ public class PropertyFactoryTest {
 
     @Test
     public void testNewDouble_defaultvalue() {
-        SchemaElement element = PropertyFactory.newDouble("testProperty", 5d);
+        MakoElement element = PropertyFactory.newDouble("testProperty", 5d);
         assertEquals("testProperty", element.getName());
         assertEquals("5.0", element.getDefaultValue());
         assertNull(element.getTitle());
@@ -146,7 +146,7 @@ public class PropertyFactoryTest {
 
     @Test
     public void testNewDouble_StringDefaultvalue() {
-        SchemaElement element = PropertyFactory.newDouble("testProperty", "5f");
+        MakoElement element = PropertyFactory.newDouble("testProperty", "5f");
         assertEquals("testProperty", element.getName());
         assertEquals("5f", element.getDefaultValue());
         assertNull(element.getTitle());
@@ -155,7 +155,7 @@ public class PropertyFactoryTest {
 
     @Test
     public void testNewBoolean() {
-        SchemaElement element = PropertyFactory.newBoolean("testProperty");
+        MakoElement element = PropertyFactory.newBoolean("testProperty");
         assertEquals("testProperty", element.getName());
         assertNull(element.getDefaultValue());
         assertNull(element.getTitle());
@@ -164,7 +164,7 @@ public class PropertyFactoryTest {
 
     @Test
     public void testNewBoolean_withDefault() {
-        SchemaElement element = PropertyFactory.newBoolean("testProperty", true);
+        MakoElement element = PropertyFactory.newBoolean("testProperty", true);
         assertEquals("testProperty", element.getName());
         assertEquals("true", element.getDefaultValue());
         assertNull(element.getTitle());
@@ -179,7 +179,7 @@ public class PropertyFactoryTest {
 
     @Test
     public void testNewBoolean_withStringDefault() {
-        SchemaElement element = PropertyFactory.newBoolean("testProperty", "true");
+        MakoElement element = PropertyFactory.newBoolean("testProperty", "true");
         assertEquals("testProperty", element.getName());
         assertEquals("true", element.getDefaultValue());
         assertNull(element.getTitle());
@@ -193,7 +193,7 @@ public class PropertyFactoryTest {
 
     @Test
     public void testNewDate() {
-        SchemaElement element = PropertyFactory.newDate("testProperty");
+        MakoElement element = PropertyFactory.newDate("testProperty");
         assertEquals("testProperty", element.getName());
         assertNull(element.getDefaultValue());
         assertNull(element.getTitle());
@@ -202,7 +202,7 @@ public class PropertyFactoryTest {
 
     @Test
     public void testNewEnumString() {
-        SchemaElement element = PropertyFactory.newEnum("testProperty");
+        MakoElement element = PropertyFactory.newEnum("testProperty");
         assertEquals("testProperty", element.getName());
         assertNull(element.getPossibleValues());
         assertNull(element.getTitle());
@@ -214,7 +214,7 @@ public class PropertyFactoryTest {
      */
     @Test
     public void testNewEnum_withvalue() {
-        SchemaElement element = PropertyFactory.newEnum("testProperty", "value1", "value2", "value3");
+        MakoElement element = PropertyFactory.newEnum("testProperty", "value1", "value2", "value3");
         assertEquals("testProperty", element.getName());
         assertNull(element.getDefaultValue());
         assertEquals(Arrays.asList("value1", "value2", "value3"), element.getPossibleValues());

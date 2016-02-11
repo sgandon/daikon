@@ -12,16 +12,16 @@
 // ============================================================================
 package org.talend.daikon.schema.internal;
 
-import org.talend.daikon.schema.AbstractSchemaElement;
-import org.talend.daikon.schema.SchemaElement;
+import org.talend.daikon.schema.AbstractMakoElement;
+import org.talend.daikon.schema.MakoElement;
 import org.talend.daikon.schema.type.ExternalBaseType;
 
 /**
- * Represents meta data elements. This typically defines the DisplayName to be the same
- * value as Name because the technical name of the metadata schema is never translated
+ * Represents meta data elements. This typically defines the DisplayName to be the same value as Name because the
+ * technical name of the metadata schema is never translated
  */
 
-public class DataSchemaElement extends AbstractSchemaElement {
+public class DataSchemaElement extends AbstractMakoElement {
 
     /**
      * the displayName is returning the current name because for real data schema the display name never gets
@@ -33,11 +33,10 @@ public class DataSchemaElement extends AbstractSchemaElement {
     }
 
     @Override
-    public SchemaElement setDisplayName(String name) {
+    public MakoElement setDisplayName(String name) {
         setName(name);
         return this;
     }
-
 
     private String appColName;
 

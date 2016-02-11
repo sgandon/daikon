@@ -48,8 +48,7 @@ public class TalendRuntimeExceptionTest {
 
         TalendRuntimeException exception = new TalendRuntimeException(
                 org.talend.daikon.exception.error.CommonErrorCodes.UNEXPECTED_EXCEPTION, new NullPointerException("root cause"),
-                ExceptionContext.build().put("key 1", "Value 1").put("key 2", 123).put("key 3",
-                        Arrays.asList(true, false, true)));
+                ExceptionContext.build().put("key 1", "Value 1").put("key 2", 123).put("key 3", Arrays.asList(true, false, true)));
 
         String expected = read(TalendRuntimeExceptionTest.class.getResourceAsStream("expected-exception.json"));
 

@@ -24,7 +24,7 @@ import org.talend.daikon.strings.ToStringIndentUtil;
 /**
  * This implementation shall be used to represent meta data elements
  */
-public abstract class AbstractSchemaElement extends SimpleNamedThing implements SchemaElement {
+public abstract class AbstractMakoElement extends SimpleNamedThing implements MakoElement {
 
     private Type type;
 
@@ -48,7 +48,7 @@ public abstract class AbstractSchemaElement extends SimpleNamedThing implements 
 
     private List<?> possibleValues;
 
-    protected List<SchemaElement> children;
+    protected List<MakoElement> children;
 
     @Override
     public String getName() {
@@ -56,12 +56,12 @@ public abstract class AbstractSchemaElement extends SimpleNamedThing implements 
     }
 
     @Override
-    public SchemaElement setName(String name) {
+    public MakoElement setName(String name) {
         this.name = name;
         return this;
     }
 
-    public SchemaElement setDisplayName(String displayName) {
+    public MakoElement setDisplayName(String displayName) {
         this.displayName = displayName;
         return this;
     }
@@ -72,7 +72,7 @@ public abstract class AbstractSchemaElement extends SimpleNamedThing implements 
     }
 
     @Override
-    public SchemaElement setTitle(String title) {
+    public MakoElement setTitle(String title) {
         this.title = title;
         return this;
     }
@@ -83,7 +83,7 @@ public abstract class AbstractSchemaElement extends SimpleNamedThing implements 
     }
 
     @Override
-    public SchemaElement setType(Type type) {
+    public MakoElement setType(Type type) {
         this.type = type;
         return this;
     }
@@ -94,7 +94,7 @@ public abstract class AbstractSchemaElement extends SimpleNamedThing implements 
     }
 
     @Override
-    public SchemaElement setSize(int size) {
+    public MakoElement setSize(int size) {
         this.size = size;
         return this;
     }
@@ -113,7 +113,7 @@ public abstract class AbstractSchemaElement extends SimpleNamedThing implements 
     }
 
     @Override
-    public SchemaElement setOccurMinTimes(int times) {
+    public MakoElement setOccurMinTimes(int times) {
         this.occurMinTimes = times;
         return this;
     }
@@ -124,7 +124,7 @@ public abstract class AbstractSchemaElement extends SimpleNamedThing implements 
     }
 
     @Override
-    public SchemaElement setOccurMaxTimes(int times) {
+    public MakoElement setOccurMaxTimes(int times) {
         this.occurMaxTimes = times;
         return this;
     }
@@ -135,12 +135,12 @@ public abstract class AbstractSchemaElement extends SimpleNamedThing implements 
     }
 
     @Override
-    public SchemaElement setRequired() {
+    public MakoElement setRequired() {
         return setRequired(true);
     }
 
     @Override
-    public SchemaElement setRequired(boolean required) {
+    public MakoElement setRequired(boolean required) {
         setOccurMinTimes(1);
         setOccurMaxTimes(1);
         return this;
@@ -152,7 +152,7 @@ public abstract class AbstractSchemaElement extends SimpleNamedThing implements 
     }
 
     @Override
-    public SchemaElement setPrecision(int precision) {
+    public MakoElement setPrecision(int precision) {
         this.precision = precision;
         return this;
     }
@@ -163,7 +163,7 @@ public abstract class AbstractSchemaElement extends SimpleNamedThing implements 
     }
 
     @Override
-    public SchemaElement setPattern(String pattern) {
+    public MakoElement setPattern(String pattern) {
         this.pattern = pattern;
         return this;
     }
@@ -174,7 +174,7 @@ public abstract class AbstractSchemaElement extends SimpleNamedThing implements 
     }
 
     @Override
-    public SchemaElement setDefaultValue(String defaultValue) {
+    public MakoElement setDefaultValue(String defaultValue) {
         this.defaultValue = defaultValue;
         return this;
     }
@@ -185,7 +185,7 @@ public abstract class AbstractSchemaElement extends SimpleNamedThing implements 
     }
 
     @Override
-    public SchemaElement setNullable(boolean nullable) {
+    public MakoElement setNullable(boolean nullable) {
         this.nullable = nullable;
         return this;
     }
@@ -196,7 +196,7 @@ public abstract class AbstractSchemaElement extends SimpleNamedThing implements 
     }
 
     @Override
-    public SchemaElement setEnumClass(Class<?> enumClass) {
+    public MakoElement setEnumClass(Class<?> enumClass) {
         this.enumClass = enumClass;
         return this;
     }
@@ -207,30 +207,30 @@ public abstract class AbstractSchemaElement extends SimpleNamedThing implements 
     }
 
     @Override
-    public SchemaElement setPossibleValues(List<?> possibleValues) {
+    public MakoElement setPossibleValues(List<?> possibleValues) {
         this.possibleValues = possibleValues;
         return this;
     }
 
     @Override
-    public SchemaElement setPossibleValues(Object... values) {
+    public MakoElement setPossibleValues(Object... values) {
         this.possibleValues = Arrays.asList(values);
         return this;
     }
 
     @Override
-    public List<SchemaElement> getChildren() {
+    public List<MakoElement> getChildren() {
         return children;
     }
 
     @Override
-    public SchemaElement setChildren(List<SchemaElement> children) {
+    public MakoElement setChildren(List<MakoElement> children) {
         this.children = children;
         return this;
     }
 
     @Override
-    public SchemaElement addChild(SchemaElement child) {
+    public MakoElement addChild(MakoElement child) {
         if (children == null) {
             children = new ArrayList<>();
         }
@@ -239,9 +239,9 @@ public abstract class AbstractSchemaElement extends SimpleNamedThing implements 
     }
 
     @Override
-    public SchemaElement getChild(String name) {
+    public MakoElement getChild(String name) {
         if (children != null) {
-            for (SchemaElement child : children) {
+            for (MakoElement child : children) {
                 if (child.getName().equals(name)) {
                     return child;
                 }
@@ -251,9 +251,9 @@ public abstract class AbstractSchemaElement extends SimpleNamedThing implements 
     }
 
     @Override
-    public Map<String, SchemaElement> getChildMap() {
-        Map<String, SchemaElement> map = new HashMap<>();
-        for (SchemaElement se : getChildren()) {
+    public Map<String, MakoElement> getChildMap() {
+        Map<String, MakoElement> map = new HashMap<>();
+        for (MakoElement se : getChildren()) {
             map.put(se.getName(), se);
         }
         return map;

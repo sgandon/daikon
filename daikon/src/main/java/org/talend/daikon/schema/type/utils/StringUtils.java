@@ -239,8 +239,7 @@ public class StringUtils {
         return list(stringArray, separator, null, null, escaper);
     }
 
-    public static String list(String[] stringArray, String separator, String startEnclosure, String endEnclosure,
-            String escaper) {
+    public static String list(String[] stringArray, String separator, String startEnclosure, String endEnclosure, String escaper) {
         if (separator == null) {
             separator = ""; //$NON-NLS-1$
         } else {

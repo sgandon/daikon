@@ -18,14 +18,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.talend.daikon.SimpleNamedThing;
-import org.talend.daikon.schema.AbstractSchemaElement;
-import org.talend.daikon.schema.Schema;
-import org.talend.daikon.schema.SchemaFactory;
+import org.talend.daikon.schema.AbstractMakoElement;
+import org.talend.daikon.schema.DataSchema;
+import org.talend.daikon.schema.DataSchemaFactory;
 
 /**
  * A property that is part of a {@link Properties}.
  */
-public class Property extends AbstractSchemaElement implements AnyProperty {
+public class Property extends AbstractMakoElement implements AnyProperty {
 
     private static final String I18N_PROPERTY_PREFIX = "property."; //$NON-NLS-1$
 
@@ -38,13 +38,13 @@ public class Property extends AbstractSchemaElement implements AnyProperty {
     transient private PropertyValueEvaluator propertyValueEvaluator;
 
     public enum Flags {
-                       /**
-                        * Encrypt this when storing the {@link Properties} into a serializable form.
-                        */
+        /**
+         * Encrypt this when storing the {@link Properties} into a serializable form.
+         */
         ENCRYPT,
-                       /**
-                        * Don't log this value in any logs.
-                        */
+        /**
+         * Don't log this value in any logs.
+         */
         SUPPRESS_LOGGING;
     };
 
@@ -86,7 +86,7 @@ public class Property extends AbstractSchemaElement implements AnyProperty {
     public void setValue(Object value) {
         Object valueToSet = value;
         if (getType() == Type.SCHEMA && value instanceof String) {
-            valueToSet = SchemaFactory.fromSerialized((String) value);
+            valueToSet = DataSchemaFactory.fromSerialized((String) value);
         }
         storedValue = valueToSet;
     }
@@ -122,8 +122,8 @@ public class Property extends AbstractSchemaElement implements AnyProperty {
     public String getStringValue() {
         Object value = getValue();
         if (value != null) {
-            if (value instanceof Schema) {
-                return ((Schema) value).toSerialized();
+            if (value instanceof DataSchema) {
+                return ((DataSchema) value).toSerialized();
             }
             return String.valueOf(value);
         }

@@ -19,9 +19,9 @@ import java.util.Map;
 
 import org.junit.Test;
 import org.talend.daikon.properties.Property;
-import org.talend.daikon.schema.AbstractSchemaElement;
-import org.talend.daikon.schema.SchemaElement;
-import org.talend.daikon.schema.SchemaElement.Type;
+import org.talend.daikon.schema.AbstractMakoElement;
+import org.talend.daikon.schema.MakoElement;
+import org.talend.daikon.schema.MakoElement.Type;
 import org.talend.daikon.schema.internal.DataSchemaElement;
 
 /**
@@ -40,7 +40,7 @@ public class DataSchemaElementTest {
 
     @Test
     public void testAbstractSchemaElement() {
-        AbstractSchemaElement element = new DataSchemaElement();
+        AbstractMakoElement element = new DataSchemaElement();
         assertNull(element.getName());
         assertEquals(element, element.setName("testName"));
         assertEquals("testName", element.getName());
@@ -107,12 +107,12 @@ public class DataSchemaElementTest {
 
     @Test
     public void testChildren() {
-        AbstractSchemaElement element = new DataSchemaElement();
-        SchemaElement child = new Property("myElement");
+        AbstractMakoElement element = new DataSchemaElement();
+        MakoElement child = new Property("myElement");
         assertNotNull(element.addChild(child).getChild("myElement"));
         assertEquals("myElement", element.getChild("myElement").getName());
 
-        List<SchemaElement> children = element.getChildren();
+        List<MakoElement> children = element.getChildren();
         assertEquals(1, children.size());
         assertEquals("myElement", children.get(0).getName());
 
@@ -121,7 +121,7 @@ public class DataSchemaElementTest {
         assertEquals("myElement", element.getChild("myElement").getName());
         assertEquals("myElement2", element.getChild("myElement2").getName());
 
-        Map<String, SchemaElement> childrenMap = element.getChildMap();
+        Map<String, MakoElement> childrenMap = element.getChildMap();
         assertEquals(2, childrenMap.size());
         assertEquals("myElement", childrenMap.get("myElement").getName());
         assertEquals("myElement2", childrenMap.get("myElement2").getName());

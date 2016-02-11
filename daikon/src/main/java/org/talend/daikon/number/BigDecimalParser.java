@@ -108,7 +108,7 @@ public class BigDecimalParser {
         /*
          * This part checks cases where two separators are present. In this case, the first one is probably the grouping
          * separator, and the second the decimal separator.
-         *
+         * 
          * Like in 1.254.789,45 or 1 254 789.45
          */
         Matcher matcher = TWO_DIFFERENT_SEPARATORS_PATTERN.matcher(from);
@@ -145,7 +145,7 @@ public class BigDecimalParser {
         /*
          * This part checks cases where a single separator is present, but many times. In this case, it's probably a
          * grouping separator.
-         *
+         * 
          * Like in 2.452.254 or 1 454 888
          */
         matcher = FEW_GROUP_SEP_PATTERN.matcher(from);

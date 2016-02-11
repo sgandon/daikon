@@ -34,7 +34,8 @@ public class BigDecimalFormatterTest {
 
     @Test
     public void testToBigDecimal_EU_grouping() throws Exception {
-        assertEquals("4" + ((char) 160) + "512,5", BigDecimalFormatter.format(new BigDecimal(4512.50), BigDecimalParser.EU_DECIMAL_PATTERN));
+        assertEquals("4" + ((char) 160) + "512,5",
+                BigDecimalFormatter.format(new BigDecimal(4512.50), BigDecimalParser.EU_DECIMAL_PATTERN));
     }
 
     @Test
@@ -44,12 +45,14 @@ public class BigDecimalFormatterTest {
 
     @Test
     public void testToBigDecimal_US_scientific() throws Exception {
-        assertEquals("1.216E3", BigDecimalFormatter.format(new BigDecimal(1215.50), BigDecimalParser.US_SCIENTIFIC_DECIMAL_PATTERN));
+        assertEquals("1.216E3",
+                BigDecimalFormatter.format(new BigDecimal(1215.50), BigDecimalParser.US_SCIENTIFIC_DECIMAL_PATTERN));
     }
 
     @Test
     public void testToBigDecimal_EU_scientific() throws Exception {
-        assertEquals("1,216E3", BigDecimalFormatter.format(new BigDecimal(1215.50), BigDecimalParser.EU_SCIENTIFIC_DECIMAL_PATTERN));
+        assertEquals("1,216E3",
+                BigDecimalFormatter.format(new BigDecimal(1215.50), BigDecimalParser.EU_SCIENTIFIC_DECIMAL_PATTERN));
     }
 
 }

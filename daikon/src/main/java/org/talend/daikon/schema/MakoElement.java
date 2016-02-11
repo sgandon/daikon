@@ -19,9 +19,12 @@ import org.talend.daikon.NamedThing;
 import org.talend.daikon.strings.ToStringIndent;
 
 /**
- *
+ * Specifies data that can be used to specify component properties.
+ * 
+ * (Previously called SchemaElement, this is no longer used to specify schemas of data passed between components or row
+ * structures.)
  */
-public interface SchemaElement extends NamedThing, ToStringIndent {
+public interface MakoElement extends NamedThing, ToStringIndent {
 
     public enum Type {
         STRING,
@@ -50,71 +53,71 @@ public interface SchemaElement extends NamedThing, ToStringIndent {
     @Override
     public String getName();
 
-    public SchemaElement setName(String name);
+    public MakoElement setName(String name);
 
     @Override
     public String getTitle();
 
-    public SchemaElement setTitle(String description);
+    public MakoElement setTitle(String description);
 
     public Type getType();
 
-    public SchemaElement setType(Type type);
+    public MakoElement setType(Type type);
 
     public int getSize();
 
-    public SchemaElement setSize(int size);
+    public MakoElement setSize(int size);
 
     public int getOccurMinTimes();
 
     public boolean isSizeUnbounded();
 
-    public SchemaElement setOccurMinTimes(int times);
+    public MakoElement setOccurMinTimes(int times);
 
     public int getOccurMaxTimes();
 
-    public SchemaElement setOccurMaxTimes(int times);
+    public MakoElement setOccurMaxTimes(int times);
 
     public boolean isRequired();
 
-    public SchemaElement setRequired();
+    public MakoElement setRequired();
 
-    public SchemaElement setRequired(boolean required);
+    public MakoElement setRequired(boolean required);
 
     public int getPrecision();
 
-    public SchemaElement setPrecision(int precision);
+    public MakoElement setPrecision(int precision);
 
     public String getPattern();
 
-    public SchemaElement setPattern(String pattern);
+    public MakoElement setPattern(String pattern);
 
     public String getDefaultValue();
 
-    public SchemaElement setDefaultValue(String defaultValue);
+    public MakoElement setDefaultValue(String defaultValue);
 
     public boolean isNullable();
 
-    public SchemaElement setNullable(boolean nullable);
+    public MakoElement setNullable(boolean nullable);
 
     public Class<?> getEnumClass();
 
-    public SchemaElement setEnumClass(Class<?> enumClass);
+    public MakoElement setEnumClass(Class<?> enumClass);
 
     public List<?> getPossibleValues();
 
-    public SchemaElement setPossibleValues(List<?> possibleValues);
+    public MakoElement setPossibleValues(List<?> possibleValues);
 
-    public SchemaElement setPossibleValues(Object... values);
+    public MakoElement setPossibleValues(Object... values);
 
-    public List<SchemaElement> getChildren();
+    public List<MakoElement> getChildren();
 
-    public SchemaElement getChild(String name);
+    public MakoElement getChild(String name);
 
-    public SchemaElement setChildren(List<SchemaElement> children);
+    public MakoElement setChildren(List<MakoElement> children);
 
-    public SchemaElement addChild(SchemaElement child);
+    public MakoElement addChild(MakoElement child);
 
-    public Map<String, SchemaElement> getChildMap();
+    public Map<String, MakoElement> getChildMap();
 
 }

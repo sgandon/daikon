@@ -23,7 +23,7 @@ import org.talend.daikon.properties.ValidationResult;
 import org.talend.daikon.properties.ValidationResult.Result;
 import org.talend.daikon.properties.presentation.Form;
 import org.talend.daikon.properties.testproperties.TestProperties;
-import org.talend.daikon.schema.AbstractSchemaElement;
+import org.talend.daikon.schema.AbstractMakoElement;
 
 /**
  * created by sgandon on 1 févr. 2016
@@ -42,12 +42,12 @@ public class PropertiesServiceTest {
         Properties props = new TestProperties(null).init();
 
         checkAndBeforePresent(propService, props.getForm(Form.MAIN), "nameList", props);
-        assertEquals(3, ((AbstractSchemaElement) props.getProperty("nameList")).getPossibleValues().size());
-        assertEquals("name1", ((AbstractSchemaElement) props.getProperty("nameList")).getPossibleValues().get(0));
+        assertEquals(3, ((AbstractMakoElement) props.getProperty("nameList")).getPossibleValues().size());
+        assertEquals("name1", ((AbstractMakoElement) props.getProperty("nameList")).getPossibleValues().get(0));
 
         checkAndBeforeActivate(propService, props.getForm(Form.MAIN), "nameListRef", props);
-        assertEquals(3, ((AbstractSchemaElement) props.getProperty("nameListRef")).getPossibleValues().size());
-        assertEquals("namer1", ((AbstractSchemaElement) props.getProperty("nameListRef")).getPossibleValues().get(0));
+        assertEquals(3, ((AbstractMakoElement) props.getProperty("nameListRef")).getPossibleValues().size());
+        assertEquals("namer1", ((AbstractMakoElement) props.getProperty("nameListRef")).getPossibleValues().get(0));
 
         assertFalse(props.getForm(Form.MAIN).getWidget("nameList").isCallBeforeActivate());
         assertFalse(props.getForm(Form.MAIN).getWidget("nameListRef").isCallBeforePresent());

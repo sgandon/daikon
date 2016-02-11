@@ -18,8 +18,7 @@ import java.util.MissingResourceException;
  * Look for a i18n <b>.properties</b> file according to the following policy. <br>
  * <ul>
  * <li>first the files with the name <b>clazz.getName() + ".properties" </b> are searched.</li>w
- * <li>if none is found then the files named <b>clazz.getPackage().getName() + ".messages.properties"</b> are searched.
- * </li>
+ * <li>if none is found then the files named <b>clazz.getPackage().getName() + ".messages.properties"</b> are searched.</li>
  * </ul>
  * Not only it looks for the current class with the following policy but if nothing found it applies the policy above to
  * the super class until java.lang.Object is reached.

@@ -30,7 +30,7 @@ import org.talend.daikon.properties.presentation.Widget;
 import org.talend.daikon.properties.presentation.Widget.WidgetType;
 import org.talend.daikon.properties.testproperties.nestedprop.NestedProperties;
 import org.talend.daikon.properties.testproperties.nestedprop.inherited.InheritedProperties;
-import org.talend.daikon.schema.SchemaElement.Type;
+import org.talend.daikon.schema.MakoElement.Type;
 
 public class TestProperties extends Properties {
 
@@ -44,8 +44,8 @@ public class TestProperties extends Properties {
 
     public Property userId = (Property) newProperty(USER_ID_PROP_NAME).setRequired(true);
 
-    public Property password = ((Property) newProperty("password").setRequired(true))
-            .setFlags(EnumSet.of(Property.Flags.ENCRYPT, Property.Flags.SUPPRESS_LOGGING));
+    public Property password = ((Property) newProperty("password").setRequired(true)).setFlags(EnumSet.of(Property.Flags.ENCRYPT,
+            Property.Flags.SUPPRESS_LOGGING));
 
     public Property nameList = newProperty("nameList");
 

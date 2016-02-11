@@ -15,20 +15,20 @@ package org.talend.daikon.schema;
 import static org.junit.Assert.*;
 
 import org.junit.Test;
-import org.talend.daikon.schema.Schema;
-import org.talend.daikon.schema.SchemaElement;
-import org.talend.daikon.schema.SchemaFactory;
+import org.talend.daikon.schema.DataSchema;
+import org.talend.daikon.schema.MakoElement;
+import org.talend.daikon.schema.DataSchemaFactory;
 
 public class SchemaTest {
 
     @Test
     public void testSerializeSchema() {
-        Schema s = SchemaFactory.newSchema();
-        SchemaElement root = s.setRoot(SchemaFactory.newSchemaElement("root"));
-        root.addChild(SchemaFactory.newSchemaElement("c1"));
+        DataSchema s = DataSchemaFactory.newSchema();
+        MakoElement root = s.setRoot(DataSchemaFactory.newSchemaElement("root"));
+        root.addChild(DataSchemaFactory.newSchemaElement("c1"));
         String ser = s.toSerialized();
 
-        Schema s2 = SchemaFactory.fromSerialized(ser);
+        DataSchema s2 = DataSchemaFactory.fromSerialized(ser);
         assertEquals("root", s2.getRoot().getName());
         assertNotNull(s2.getRoot().getChild("c1"));
     }

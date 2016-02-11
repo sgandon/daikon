@@ -92,18 +92,17 @@ public class PropertiesTestUtils {
                         errorCollector.checkThat(
                                 "Form [" + form.getProperties().getClass().getCanonicalName() + "#" + form.getName()
                                         + "] should have a translated message key [form." + form.getName()
-                                        + ".title] in [the proper messages.properties]",
-                                form.getTitle().endsWith(".title"), is(false));
+                                        + ".title] in [the proper messages.properties]", form.getTitle().endsWith(".title"),
+                                is(false));
 
                     }
                 }
 
                 @Override
                 public void visit(Property prop, Properties parent) {
-                    errorCollector.checkThat(
-                            "property [" + parent.getClass().getCanonicalName() + "#" + prop.getName()
-                                    + "] should have a translated message key [property." + prop.getName()
-                                    + ".displayName] in [the proper messages.properties]",
+                    errorCollector.checkThat("property [" + parent.getClass().getCanonicalName() + "#" + prop.getName()
+                            + "] should have a translated message key [property." + prop.getName()
+                            + ".displayName] in [the proper messages.properties]",
                             prop.getDisplayName().endsWith(".displayName"), is(false));
                 }
             }, null);

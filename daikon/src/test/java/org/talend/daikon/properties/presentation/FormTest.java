@@ -25,7 +25,7 @@ public class FormTest {
     @Test
     public void testNameEqualsDisplayNameWithUsualConstructor() {
         Form form = new Form(new Properties("bar") { //$NON-NLS-1$
-        }, "foo"); //$NON-NLS-1$
+                }, "foo"); //$NON-NLS-1$
         assertEquals("foo", form.getName()); //$NON-NLS-1$
         assertEquals("foo", form.getDisplayName()); //$NON-NLS-1$
     }
@@ -33,7 +33,7 @@ public class FormTest {
     @Test
     public void testGetI18NFields() {
         Form form = new Form(new Properties("bar") { //$NON-NLS-1$
-        }, "foo", null, null); //$NON-NLS-1$
+                }, "foo", null, null); //$NON-NLS-1$
         assertEquals("Ze Form DisplayName", form.getDisplayName()); //$NON-NLS-1$
         assertEquals("Ze Form Title", form.getTitle()); //$NON-NLS-1$
         assertEquals("Ze Form SubTitle", form.getSubtitle()); //$NON-NLS-1$
@@ -45,7 +45,7 @@ public class FormTest {
         String title = "Default Title"; //$NON-NLS-1$
         String subTitle = "Default SubTitle"; //$NON-NLS-1$
         Form form = new Form(new Properties("bar") { //$NON-NLS-1$
-        }, "foo", displayName, title); //$NON-NLS-1$
+                }, "foo", displayName, title); //$NON-NLS-1$
         form.setSubtitle(subTitle);
         assertEquals(displayName, form.getDisplayName());
         assertEquals(title, form.getTitle());

@@ -12,7 +12,7 @@
 // ============================================================================
 package org.talend.daikon.properties;
 
-import org.talend.daikon.schema.SchemaElement;
+import org.talend.daikon.schema.MakoElement;
 
 /**
  * Make new {@link Property} objects.
@@ -27,16 +27,16 @@ public class PropertyFactory {
         return new Property(name, title);
     }
 
-    public static Property newProperty(SchemaElement.Type type, String name, String title) {
+    public static Property newProperty(MakoElement.Type type, String name, String title) {
         return new Property(type, name, title);
     }
 
-    public static Property newProperty(SchemaElement.Type type, String name) {
+    public static Property newProperty(MakoElement.Type type, String name) {
         return new Property(type, name);
     }
 
     public static Property newString(String name) {
-        return new Property(SchemaElement.Type.STRING, name);
+        return new Property(MakoElement.Type.STRING, name);
     }
 
     public static Property newString(String name, String defaultValue) {
@@ -46,7 +46,7 @@ public class PropertyFactory {
     }
 
     public static Property newInteger(String name) {
-        return new Property(SchemaElement.Type.INT, name);
+        return new Property(MakoElement.Type.INT, name);
     }
 
     public static Property newInteger(String name, String defaultValue) {
@@ -60,13 +60,13 @@ public class PropertyFactory {
     }
 
     public static Property newLong(String name, Long defaultValue) {
-        Property property = new Property(SchemaElement.Type.LONG, name);
+        Property property = new Property(MakoElement.Type.LONG, name);
         property.setDefaultValue(String.valueOf(defaultValue));
         return property;
     }
 
     public static Property newDouble(String name) {
-        return new Property(SchemaElement.Type.DOUBLE, name);
+        return new Property(MakoElement.Type.DOUBLE, name);
     }
 
     public static Property newDouble(String name, String defaultValue) {
@@ -80,7 +80,7 @@ public class PropertyFactory {
     }
 
     public static Property newFloat(String name) {
-        return new Property(SchemaElement.Type.FLOAT, name);
+        return new Property(MakoElement.Type.FLOAT, name);
     }
 
     public static Property newFloat(String name, String defaultValue) {
@@ -94,7 +94,7 @@ public class PropertyFactory {
     }
 
     public static Property newBoolean(String name) {
-        return new Property(SchemaElement.Type.BOOLEAN, name);
+        return new Property(MakoElement.Type.BOOLEAN, name);
     }
 
     public static Property newBoolean(String name, String defaultValue) {
@@ -108,22 +108,22 @@ public class PropertyFactory {
     }
 
     public static Property newDate(String name) {
-        return new Property(SchemaElement.Type.DATE, name);
+        return new Property(MakoElement.Type.DATE, name);
     }
 
     public static Property newEnum(String name) {
-        return new Property(SchemaElement.Type.ENUM, name);
+        return new Property(MakoElement.Type.ENUM, name);
     }
 
     public static Property newEnum(String name, Object... values) {
-        Property property = new Property(SchemaElement.Type.ENUM, name);
+        Property property = new Property(MakoElement.Type.ENUM, name);
         property.setPossibleValues(values);
         return property;
     }
 
     public static Property newTable(String name, Property... properties) {
         Property table = newProperty(name);
-        table.setOccurMaxTimes(SchemaElement.INFINITE);
+        table.setOccurMaxTimes(MakoElement.INFINITE);
         table.setChildren(null);
         for (Property property : properties) {
             table.addChild(property);

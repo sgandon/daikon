@@ -13,7 +13,7 @@
 package org.talend.daikon.schema;
 
 import org.talend.daikon.schema.internal.DataSchemaElement;
-import org.talend.daikon.schema.internal.SchemaImpl;
+import org.talend.daikon.schema.internal.DataSchemaImpl;
 
 import com.cedarsoftware.util.io.JsonReader;
 import org.talend.daikon.schema.type.ExternalBaseType;
@@ -22,20 +22,21 @@ import org.talend.daikon.schema.type.TypeMapping;
 /**
  * Make objects that are related to the schemas.
  */
-public class SchemaFactory {
+@Deprecated
+public class DataSchemaFactory {
 
-    public static Schema newSchema() {
-        return new SchemaImpl();
+    public static DataSchema newSchema() {
+        return new DataSchemaImpl();
     }
 
-    public static SchemaElement newSchemaElement(SchemaElement.Type type, String name) {
-        SchemaElement se = newSchemaElement(name);
+    public static MakoElement newSchemaElement(MakoElement.Type type, String name) {
+        MakoElement se = newSchemaElement(name);
         se.setType(type);
         return se;
     }
 
-    public static SchemaElement newSchemaElement(String name) {
-        SchemaElement se = new DataSchemaElement();
+    public static MakoElement newSchemaElement(String name) {
+        MakoElement se = new DataSchemaElement();
         se.setName(name);
         return se;
     }
@@ -50,14 +51,15 @@ public class SchemaFactory {
     }
 
     /**
-     * Returns a {@link Schema} object materialized from the serialized string. See {@link Schema#toSerialized()}.
+     * Returns a {@link DataSchema} object materialized from the serialized string. See
+     * {@link DataSchema#toSerialized()}.
      */
-    public static Schema fromSerialized(String serialized) {
-        Schema deser = null;
+    public static DataSchema fromSerialized(String serialized) {
+        DataSchema deser = null;
         ClassLoader originalContextClassLoader = Thread.currentThread().getContextClassLoader();
         try {
-            Thread.currentThread().setContextClassLoader(SchemaFactory.class.getClassLoader());
-            deser = (Schema) JsonReader.jsonToJava(serialized);
+            Thread.currentThread().setContextClassLoader(DataSchemaFactory.class.getClassLoader());
+            deser = (DataSchema) JsonReader.jsonToJava(serialized);
         } finally {
             Thread.currentThread().setContextClassLoader(originalContextClassLoader);
         }

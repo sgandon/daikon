@@ -12,22 +12,22 @@
 // ============================================================================
 package org.talend.daikon.schema.internal;
 
-import org.talend.daikon.schema.Schema;
-import org.talend.daikon.schema.SchemaElement;
+import org.talend.daikon.schema.DataSchema;
+import org.talend.daikon.schema.MakoElement;
 
 import com.cedarsoftware.util.io.JsonWriter;
 
-public class SchemaImpl implements Schema {
+public class DataSchemaImpl implements DataSchema {
 
-    protected SchemaElement root;
+    protected MakoElement root;
 
     @Override
-    public SchemaElement getRoot() {
+    public MakoElement getRoot() {
         return root;
     }
 
     @Override
-    public SchemaElement setRoot(SchemaElement root) {
+    public MakoElement setRoot(MakoElement root) {
         this.root = root;
         return root;
     }

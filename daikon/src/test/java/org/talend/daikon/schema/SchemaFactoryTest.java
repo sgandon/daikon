@@ -15,11 +15,11 @@ package org.talend.daikon.schema;
 import static org.junit.Assert.*;
 
 import org.junit.Test;
-import org.talend.daikon.schema.Schema;
-import org.talend.daikon.schema.SchemaElement;
-import org.talend.daikon.schema.SchemaFactory;
-import org.talend.daikon.schema.SchemaElement.Type;
-import org.talend.daikon.schema.internal.SchemaImpl;
+import org.talend.daikon.schema.DataSchema;
+import org.talend.daikon.schema.MakoElement;
+import org.talend.daikon.schema.DataSchemaFactory;
+import org.talend.daikon.schema.MakoElement.Type;
+import org.talend.daikon.schema.internal.DataSchemaImpl;
 
 /**
  * created by pbailly on 5 Nov 2015 Detailled comment
@@ -29,12 +29,12 @@ public class SchemaFactoryTest {
 
     @Test
     public void testNewSchema() {
-        assertEquals(SchemaImpl.class, SchemaFactory.newSchema().getClass());
+        assertEquals(DataSchemaImpl.class, DataSchemaFactory.newSchema().getClass());
     }
 
     @Test
     public void testNewSchemaElement() {
-        SchemaElement element = SchemaFactory.newSchemaElement(Type.DECIMAL, "schemaElement");
+        MakoElement element = DataSchemaFactory.newSchemaElement(Type.DECIMAL, "schemaElement");
         assertEquals("schemaElement", element.getName());
         assertNull(element.getDefaultValue());
         assertNull(element.getDefaultValue());
@@ -45,14 +45,14 @@ public class SchemaFactoryTest {
     @Test
     // TUP-3898 Generic codegen for a Schema does not probably handle escaped quotes.
     public void testQuoteDeserialize() {
-        SchemaElement element = SchemaFactory.newSchemaElement(Type.DATETIME, "dateTime");
+        MakoElement element = DataSchemaFactory.newSchemaElement(Type.DATETIME, "dateTime");
         element.setPattern("\"pattern\"");
-        Schema schema = SchemaFactory.newSchema();
+        DataSchema schema = DataSchemaFactory.newSchema();
         schema.setRoot(element);
         String ser = schema.toSerialized();
         System.out.println(ser);
 
-        String quoted = "\"" + ser.replace("\\\"",	"\\\\\"").replace("\"", "\\\"") + "\"";
+        String quoted = "\"" + ser.replace("\\\"", "\\\\\"").replace("\"", "\\\"") + "\"";
         System.out.println(quoted);
         assertTrue(quoted.contains("\\\\\\\"pattern"));
 

@@ -82,8 +82,7 @@ public class I18nMessagesTest {
 
     @Test(expected = MissingResourceException.class)
     public void testResourceNotfoundExceptionNoFileFound() {
-        I18nMessages i18nMessages = new DynamicLocalFormatedI18nImpl(null,
-                "org.talend.daikon.i18n.testMessageNoExisting");
+        I18nMessages i18nMessages = new DynamicLocalFormatedI18nImpl(null, "org.talend.daikon.i18n.testMessageNoExisting");
         i18nMessages.getMessage("any.key", null);
     }
 
@@ -93,8 +92,7 @@ public class I18nMessagesTest {
     @Test
     public void testGetMessageMutableLocalProvider() {
         MutableLocalProvider mutableLocaleProvider = new MutableLocalProvider();
-        I18nMessages i18nMessages = new DynamicLocalFormatedI18nImpl(mutableLocaleProvider,
-                "org.talend.daikon.i18n.testMessage"); //$NON-NLS-1$
+        I18nMessages i18nMessages = new DynamicLocalFormatedI18nImpl(mutableLocaleProvider, "org.talend.daikon.i18n.testMessage"); //$NON-NLS-1$
         // first test with a null local which shall result in the default locale
         assertEquals("", i18nMessages.getMessage("ze.empty.key", null));
         assertEquals("normal", i18nMessages.getMessage("ze.normal.key", null));

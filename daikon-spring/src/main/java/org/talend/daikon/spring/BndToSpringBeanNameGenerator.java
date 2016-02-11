@@ -22,11 +22,9 @@ import org.springframework.core.type.AnnotationMetadata;
 import org.springframework.util.StringUtils;
 
 /**
- * This class allow spring to recognize bnd @Component annotation as named Spring components. you can use iit like this
- * <br/>
+ * This class allow spring to recognize bnd @Component annotation as named Spring components. you can use iit like this <br/>
  * <code>
  * &#64;ComponentScan(nameGenerator = BndToSpringBeanNameGenerator.class, includeFilters = @ComponentScan.Filter(type = FilterType.ANNOTATION, classes = aQute.bnd.annotation.component.Component.class) )
-
  * </code>
  */
 public class BndToSpringBeanNameGenerator extends AnnotationBeanNameGenerator {

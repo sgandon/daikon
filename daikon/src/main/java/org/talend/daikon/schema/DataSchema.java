@@ -15,15 +15,15 @@ package org.talend.daikon.schema;
 /**
  * A schema that can be used by the component service
  */
-public interface Schema {
+public interface DataSchema {
 
-    public SchemaElement getRoot();
+    public MakoElement getRoot();
 
-    public SchemaElement setRoot(SchemaElement root);
+    public MakoElement setRoot(MakoElement root);
 
     /**
-     * Returns a string that is the serialized form of this Schema. Use {@link SchemaFactory#fromSerialized(String)} to
-     * materialize the object from the string.
+     * Returns a string that is the serialized form of this Schema. Use {@link DataSchemaFactory#fromSerialized(String)}
+     * to materialize the object from the string.
      */
     public String toSerialized();
 

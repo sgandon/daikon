@@ -18,7 +18,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.junit.Test;
-import org.talend.daikon.schema.SchemaElement;
+import org.talend.daikon.schema.MakoElement;
 
 /**
  * created by pbailly on 5 Nov 2015 Detailled comment
@@ -32,9 +32,9 @@ public class SchemaElementTest {
      */
     @Test
     public void testEnum() {
-        List<String> ref = Arrays.asList("STRING", "BOOLEAN", "BYTE", "SHORT", "INT", "LONG", "DATE", "DATETIME", "DECIMAL", "FLOAT", "DOUBLE",
-                "BYTE_ARRAY", "ENUM", "OBJECT", "CHARACTER", "LIST", "DYNAMIC", "GROUP", "SCHEMA");
-        List<SchemaElement.Type> types = Arrays.asList(SchemaElement.Type.values());
+        List<String> ref = Arrays.asList("STRING", "BOOLEAN", "BYTE", "SHORT", "INT", "LONG", "DATE", "DATETIME", "DECIMAL",
+                "FLOAT", "DOUBLE", "BYTE_ARRAY", "ENUM", "OBJECT", "CHARACTER", "LIST", "DYNAMIC", "GROUP", "SCHEMA");
+        List<MakoElement.Type> types = Arrays.asList(MakoElement.Type.values());
         assertEquals(ref.size(), types.size());
         assertEquals(ref.toString(), types.toString());
     }

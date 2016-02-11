@@ -112,8 +112,8 @@ public class ClassLoaderBasedI18nMessages extends I18nMessages {
     }
 
     /**
-     * Create an new FromatedMessage based on the current instance localProvider. The same as same as
-     * {@link I18nMessages#I18nMessages(this.localeProvider, ClassLaoder , String)}
+     * Create an new FromatedMessage based on the current instance localProvider. The same as same as {@link
+     * I18nMessages#I18nMessages(this.localeProvider, ClassLaoder , String)}
      * 
      * @param ClassLoader, classloader used to find the resource with the baseName
      * @param baseName, used to create the underlying resource bundle, see {@link ResourceBundle#getBundle(String)}
