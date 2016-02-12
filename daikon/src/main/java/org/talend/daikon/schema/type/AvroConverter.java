@@ -7,7 +7,7 @@ import org.apache.avro.Schema;
  */
 public interface AvroConverter<SpecificT, AvroT> {
 
-    /** @return the Avro Schema that this knows how to convert from and to. */
+    /** @return the Avro Schema that is compatible with the AvroT type. */
     public Schema getAvroSchema();
 
     /** @return the class of the specific type that this converter knows how to convert from. */
