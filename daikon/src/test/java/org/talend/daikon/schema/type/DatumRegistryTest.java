@@ -20,7 +20,7 @@ public class DatumRegistryTest {
 
     @Test
     public void testWrapPrimitivesAsSingleColumn() {
-        IndexedRecord ir = DatumRegistry.getFacadeFactory(String.class).createFacade("Hello");
+        IndexedRecord ir = DatumRegistry.getFacadeFactory(String.class).convertToAvro("Hello");
 
         Schema s = ir.getSchema();
         assertThat(s.getType(), is(Schema.Type.RECORD));
@@ -31,14 +31,14 @@ public class DatumRegistryTest {
     @Test
     public void testUnconvertedIndexRecords() {
         // Just create a fake object that is known to be an index record.
-        IndexedRecord in = DatumRegistry.getFacadeFactory(String.class).createFacade("Hello");
+        IndexedRecord in = DatumRegistry.getFacadeFactory(String.class).convertToAvro("Hello");
 
         // Get a facade factory for it.
-        IndexedRecordFacadeFactory<?> irff = DatumRegistry.getFacadeFactory(in.getClass());
+        IndexedRecordFacadeFactory<?, ?> irff = DatumRegistry.getFacadeFactory(in.getClass());
         assertThat(irff, not(nullValue()));
 
         @SuppressWarnings({ "rawtypes", "unchecked" })
-        IndexedRecord out = ((IndexedRecordFacadeFactory) irff).createFacade(in);
+        IndexedRecord out = (IndexedRecord) ((IndexedRecordFacadeFactory) irff).convertToAvro(in);
         assertThat(out, sameInstance(in));
     }
 
@@ -49,7 +49,7 @@ public class DatumRegistryTest {
         };
 
         // thrown.expect(RuntimeException.class);
-        IndexedRecordFacadeFactory<?> irff = DatumRegistry.getFacadeFactory(datum.getClass());
+        IndexedRecordFacadeFactory<?, ?> irff = DatumRegistry.getFacadeFactory(datum.getClass());
         assertThat(irff, nullValue());
     }
 

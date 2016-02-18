@@ -7,8 +7,8 @@ import java.math.BigInteger;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.nio.ByteBuffer;
-import java.sql.Date;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -25,7 +25,7 @@ public class DatumRegistry {
 
     private static Map<Class<?>, AvroConverter<?, ?>> mRegistry = new HashMap<>();
 
-    private static Map<Class<?>, Factory<? extends IndexedRecordFacadeFactory<?>>> mFacadeFactories = new HashMap<>();
+    private static Map<Class<?>, Factory<? extends IndexedRecordFacadeFactory<?, ?>>> mFacadeFactories = new HashMap<>();
 
     // Set up the registry with common converters.
     static {
@@ -60,86 +60,99 @@ public class DatumRegistry {
         mRegistry.put(specificClass, converter);
     }
 
-    @SuppressWarnings("unchecked")
-    public static <T> AvroConverter<T, ?> getConverter(Class<T> specificClass) {
-        return (AvroConverter<T, ?>) mRegistry.get(specificClass);
-    }
-
-    public static <T> void registerFacadeFactory(Class<T> datumClass,
-            Class<? extends IndexedRecordFacadeFactory<? super T>> facadeFactoryClass) {
-        mFacadeFactories.put(datumClass, new NewInstanceFactory<T>(datumClass, facadeFactoryClass));
-    }
-
-    protected static <T> void registerFacadeFactory(Class<T> datumClass,
-            Factory<IndexedRecordFacadeFactory<T>> facadeFactoryFactory) {
-        mFacadeFactories.put(datumClass, facadeFactoryFactory);
-    }
-
-    public static <DatumT> IndexedRecordFacadeFactory<? super DatumT> getFacadeFactory(Class<DatumT> datumClass) {
+    /**
+     * G
+     * 
+     * @param map
+     * @param datumClass
+     * @return
+     */
+    private static <T> T getFromClassRegistry(Map<Class<?>, ? extends T> map, Class<?> datumClass) {
         if (datumClass == null)
             return null;
 
-        // This is guaranteed to be correctly typed if it exists, because of the register methods.
-        @SuppressWarnings("unchecked")
-        Factory<? extends IndexedRecordFacadeFactory<DatumT>> irfff = (Factory<? extends IndexedRecordFacadeFactory<DatumT>>) mFacadeFactories
-                .get(datumClass);
-        if (irfff != null) {
-            return irfff.create();
+        T match = map.get(datumClass);
+        if (match != null) {
+            return match;
         }
 
         // Attempt to go up through the super classes.
-        IndexedRecordFacadeFactory<? super DatumT> sirfff = getFacadeFactory(datumClass.getSuperclass());
-        if (sirfff != null) {
-            // TODO(rskraba): Should we register that this is the best match?
-            return sirfff;
+        match = getFromClassRegistry(map, datumClass.getSuperclass());
+        if (match != null) {
+            return match;
         }
 
-        for (Class<?> c : datumClass.getInterfaces()) {
-            Class<? super DatumT> iClass = (Class<? super DatumT>) c;
-            IndexedRecordFacadeFactory<? super DatumT> iirfff = getFacadeFactory(iClass);
-            if (iirfff != null) {
-                // TODO(rskraba): Should we register that this is the best match?
-                return iirfff;
-            }
-        }
-
-        if (IndexedRecord.class.isAssignableFrom(datumClass)) {
-            @SuppressWarnings("unchecked")
-            IndexedRecordFacadeFactory<DatumT> irff = (IndexedRecordFacadeFactory<DatumT>) new UnconvertedIndexedRecordFacadeFactory<IndexedRecord>();
-            return irff;
+        for (Class<?> iClass : datumClass.getInterfaces()) {
+            match = getFromClassRegistry(map, iClass);
+            if (match != null)
+                return match;
         }
 
         return null;
     }
 
+    @SuppressWarnings("unchecked")
+    public static <T> AvroConverter<T, ?> getConverter(Class<T> datumClass) {
+        // If a converter exists, it is guaranteed to be correctly typed because of
+        // the register methods.
+        return (AvroConverter<T, ?>) getFromClassRegistry(mRegistry, datumClass);
+    }
+
+    public static <T> void registerFacadeFactory(Class<T> datumClass,
+            Class<? extends IndexedRecordFacadeFactory<? super T, ?>> facadeFactoryClass) {
+        mFacadeFactories.put(datumClass, new NewInstanceFactory<T>(datumClass, facadeFactoryClass));
+    }
+
+    protected static <T> void registerFacadeFactory(Class<T> datumClass,
+            Factory<? extends IndexedRecordFacadeFactory<? super T, ?>> facadeFactoryFactory) {
+        mFacadeFactories.put(datumClass, facadeFactoryFactory);
+    }
+
+    public static <DatumT> IndexedRecordFacadeFactory<? super DatumT, ?> getFacadeFactory(Class<DatumT> datumClass) {
+        // This is guaranteed to be correctly typed if it exists, because of the
+        // register methods.
+        @SuppressWarnings("unchecked")
+        Factory<? extends IndexedRecordFacadeFactory<DatumT, ?>> factory = (Factory<? extends IndexedRecordFacadeFactory<DatumT, ?>>) getFromClassRegistry(
+                mFacadeFactories, datumClass);
+
+        if (factory == null && IndexedRecord.class.isAssignableFrom(datumClass)) {
+            @SuppressWarnings("unchecked")
+            IndexedRecordFacadeFactory<DatumT, ?> unconverted = (IndexedRecordFacadeFactory<DatumT, ?>) new UnconvertedIndexedRecordFacadeFactory<IndexedRecord>();
+            return unconverted;
+        }
+
+        return factory == null ? null : factory.create();
+    }
+
     /**
-     * 
-     */
-    public static class NewInstanceFactory<T> implements Factory<IndexedRecordFacadeFactory<T>> {
+   * 
+   */
+    public static class NewInstanceFactory<T> implements Factory<IndexedRecordFacadeFactory<T, ?>> {
 
         private Class<T> mDatumClass;
 
-        private Class<? extends IndexedRecordFacadeFactory<? super T>> mFactoryClass;
+        private Class<? extends IndexedRecordFacadeFactory<? super T, ?>> mFactoryClass;
 
-        public NewInstanceFactory(Class<T> datumClass, Class<? extends IndexedRecordFacadeFactory<? super T>> factoryClass) {
+        public NewInstanceFactory(Class<T> datumClass, Class<? extends IndexedRecordFacadeFactory<? super T, ?>> factoryClass) {
             mDatumClass = datumClass;
             mFactoryClass = factoryClass;
         }
 
         @Override
-        public IndexedRecordFacadeFactory<T> create() {
+        public IndexedRecordFacadeFactory<T, ?> create() {
             try {
                 Constructor<?>[] cs = mFactoryClass.getConstructors();
                 for (Constructor<?> c : cs) {
                     if (c.getParameterTypes().length == 1) {
-                        // TODO: ensure that the first parameter is a specific class of the correct type.
+                        // TODO: ensure that the first parameter is a specific class of the
+                        // correct type.
                         @SuppressWarnings("unchecked")
-                        Constructor<? extends IndexedRecordFacadeFactory<T>> cc = (Constructor<? extends IndexedRecordFacadeFactory<T>>) c;
+                        Constructor<? extends IndexedRecordFacadeFactory<T, ?>> cc = (Constructor<? extends IndexedRecordFacadeFactory<T, ?>>) c;
                         return cc.newInstance(mDatumClass);
                     }
                 }
                 // Otherwise use the empty constructor.
-                return (IndexedRecordFacadeFactory<T>) mFactoryClass.newInstance();
+                return (IndexedRecordFacadeFactory<T, ?>) mFactoryClass.newInstance();
             } catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
                 throw new RuntimeException(e);
             }
@@ -151,7 +164,8 @@ public class DatumRegistry {
      * This creates facade factories that wrap types that are already Avro compatible into an {@link IndexedRecord} with
      * a single column containing that Avro object.
      */
-    private static class PrimitiveAsIndexedRecordFacadeFactoryFactory<T> implements Factory<IndexedRecordFacadeFactory<T>> {
+    private static class PrimitiveAsIndexedRecordFacadeFactoryFactory<T> implements
+            Factory<IndexedRecordFacadeFactory<T, PrimitiveAsIndexedRecordFacade<T>>> {
 
         private final Class<T> mSpecificClass;
 
@@ -168,11 +182,11 @@ public class DatumRegistry {
         }
 
         @Override
-        public IndexedRecordFacadeFactory<T> create() {
+        public IndexedRecordFacadeFactory<T, PrimitiveAsIndexedRecordFacade<T>> create() {
             return mFactory;
         }
 
-        private class InternalFactory implements IndexedRecordFacadeFactory<T> {
+        private class InternalFactory implements IndexedRecordFacadeFactory<T, PrimitiveAsIndexedRecordFacade<T>> {
 
             @Override
             public Schema getSchema() {
@@ -189,37 +203,46 @@ public class DatumRegistry {
             }
 
             @Override
-            public IndexedRecord createFacade(T value) {
-                return new PrimitiveAsIndexedRecordFacade(value);
-            }
-        }
-
-        private class PrimitiveAsIndexedRecordFacade implements IndexedRecord {
-
-            private final T mValue;
-
-            private PrimitiveAsIndexedRecordFacade(T value) {
-                mValue = value;
+            public PrimitiveAsIndexedRecordFacade<T> convertToAvro(T value) {
+                return new PrimitiveAsIndexedRecordFacade<T>(mSchema, value);
             }
 
             @Override
-            public Schema getSchema() {
-                return mSchema;
-            }
-
-            public Object get(int i) {
-                return mValue;
-            }
-
-            @Override
-            public void put(int i, Object v) {
-                throw new UnsupportedOperationException("Unmodifiable facade: " + mSchema);
+            public T convertFromAvro(PrimitiveAsIndexedRecordFacade<T> value) {
+                return value.get(0);
             }
         }
     }
 
+    public static class PrimitiveAsIndexedRecordFacade<T> implements IndexedRecord {
+
+        private final T mValue;
+
+        private final Schema mSchema;
+
+        private PrimitiveAsIndexedRecordFacade(Schema schema, T value) {
+            mSchema = schema;
+            mValue = value;
+        }
+
+        @Override
+        public Schema getSchema() {
+            return mSchema;
+        }
+
+        public T get(int i) {
+            return mValue;
+        }
+
+        @Override
+        public void put(int i, Object v) {
+            throw new UnsupportedOperationException("Unmodifiable facade: " + mSchema);
+        }
+    }
+
     /** Passes through an indexed record without modification. */
-    public static class UnconvertedIndexedRecordFacadeFactory<T extends IndexedRecord> implements IndexedRecordFacadeFactory<T> {
+    public static class UnconvertedIndexedRecordFacadeFactory<T extends IndexedRecord> implements
+            IndexedRecordFacadeFactory<T, IndexedRecord> {
 
         private Schema mSchema;
 
@@ -241,8 +264,13 @@ public class DatumRegistry {
         }
 
         @Override
-        public IndexedRecord createFacade(T value) {
+        public IndexedRecord convertToAvro(T value) {
             return value;
+        }
+
+        @Override
+        public T convertFromAvro(IndexedRecord value) {
+            return (T) value;
         }
     }
 
@@ -251,14 +279,17 @@ public class DatumRegistry {
     // return null;
     // if (value instanceof IndexedRecord)
     // return (IndexedRecord) value;
-    // // This is guaranteed to be the correct type, enforced by the register method.
+    // // This is guaranteed to be the correct type, enforced by the register
+    // method.
     // @SuppressWarnings("unchecked")
-    // AvroIndexedRecordConverter<T, ?> wrapper = (AvroIndexedRecordConverter<T, ?>)
+    // AvroIndexedRecordConverter<T, ?> wrapper = (AvroIndexedRecordConverter<T,
+    // ?>)
     // mRecordWrappers.get(value.getClass());
     // return wrapper.convertToAvro(value);
     // }
 
-    // public static final class UnconvertedIndexRecord<T extends IndexedRecord> implements AvroIndexedRecordFacade<T,
+    // public static final class UnconvertedIndexRecord<T extends IndexedRecord>
+    // implements AvroIndexedRecordFacade<T,
     // T> {
     //
     // private final Class<T> mSpecificClass;
@@ -310,7 +341,7 @@ public class DatumRegistry {
         }
 
         @Override
-        public Schema getAvroSchema() {
+        public Schema getSchema() {
             return mSchema;
         }
 
@@ -334,8 +365,8 @@ public class DatumRegistry {
     public static class BigDecimalConverter implements AvroConverter<BigDecimal, String> {
 
         @Override
-        public Schema getAvroSchema() {
-            return Schema.create(Type.LONG);
+        public Schema getSchema() {
+            return Schema.create(Type.STRING);
         }
 
         @Override
@@ -358,8 +389,8 @@ public class DatumRegistry {
     public static class BigIntegerConverter implements AvroConverter<BigInteger, String> {
 
         @Override
-        public Schema getAvroSchema() {
-            return Schema.create(Type.LONG);
+        public Schema getSchema() {
+            return Schema.create(Type.STRING);
         }
 
         @Override
@@ -378,11 +409,13 @@ public class DatumRegistry {
         }
     }
 
-    /** TODO(rskraba): Use the logical type here? Or just leave it as long for processing...? */
+    /**
+     * TODO(rskraba): Use the logical type here? Or just leave it as long for processing...?
+     */
     public static class DateConverter implements AvroConverter<Date, Long> {
 
         @Override
-        public Schema getAvroSchema() {
+        public Schema getSchema() {
             return Schema.create(Type.LONG);
         }
 
@@ -406,10 +439,10 @@ public class DatumRegistry {
     public static class InetAddressConverter implements AvroConverter<InetAddress, byte[]> {
 
         @Override
-        public Schema getAvroSchema() {
+        public Schema getSchema() {
             return Schema.createUnion( //
-                    Arrays.asList(Schema.createFixed(null, null, null, 4), //
-                            Schema.createFixed(null, null, null, 16)));
+                    Arrays.asList(Schema.createFixed("Inet4", null, null, 4), //
+                            Schema.createFixed("Inet6", null, null, 16)));
         }
 
         @Override
@@ -437,7 +470,7 @@ public class DatumRegistry {
     public static class UUIDConverter implements AvroConverter<UUID, String> {
 
         @Override
-        public Schema getAvroSchema() {
+        public Schema getSchema() {
             return Schema.create(Type.STRING);
         }
 
@@ -456,4 +489,5 @@ public class DatumRegistry {
             return value == null ? null : value.toString();
         }
     }
+
 }
