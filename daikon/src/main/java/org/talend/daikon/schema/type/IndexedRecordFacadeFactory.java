@@ -6,8 +6,8 @@ import org.apache.avro.generic.IndexedRecord;
 /**
  * 
  */
-public interface IndexedRecordFacadeFactory<SpecificT, IndexedRecordT extends IndexedRecord> extends
-        AvroConverter<SpecificT, IndexedRecordT> {
+public interface IndexedRecordFacadeFactory<SpecificT, IndexedRecordT extends IndexedRecord>
+        extends AvroConverter<SpecificT, IndexedRecordT> {
 
     /**
      * @return the Avro Schema for the {@link IndexedRecord} that this knows how to create. This must be a Type.RECORD,
@@ -22,4 +22,24 @@ public interface IndexedRecordFacadeFactory<SpecificT, IndexedRecordT extends In
      */
     void setSchema(Schema schema);
 
+    /**
+     * When a factory only supports one way conversion between a specific class of data to an IndexedRecord, it can
+     * throw this exception on the unsupported convert operation.
+     * 
+     * This is a {@link RuntimeException}. Developers should ensure that the classes they support are capable of doing
+     * the conversions they require.
+     */
+    public static class UnmodifiableFacadeException extends UnsupportedOperationException {
+
+        /** Default serial version UID. */
+        private static final long serialVersionUID = 1L;
+
+        public UnmodifiableFacadeException() {
+            super();
+        }
+
+        public UnmodifiableFacadeException(String message) {
+            super(message);
+        }
+    }
 }

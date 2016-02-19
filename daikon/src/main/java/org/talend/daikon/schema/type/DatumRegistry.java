@@ -125,8 +125,8 @@ public class DatumRegistry {
     }
 
     /**
-   * 
-   */
+    * 
+    */
     public static class NewInstanceFactory<T> implements Factory<IndexedRecordFacadeFactory<T, ?>> {
 
         private Class<T> mDatumClass;
@@ -164,8 +164,8 @@ public class DatumRegistry {
      * This creates facade factories that wrap types that are already Avro compatible into an {@link IndexedRecord} with
      * a single column containing that Avro object.
      */
-    private static class PrimitiveAsIndexedRecordFacadeFactoryFactory<T> implements
-            Factory<IndexedRecordFacadeFactory<T, PrimitiveAsIndexedRecordFacade<T>>> {
+    private static class PrimitiveAsIndexedRecordFacadeFactoryFactory<T>
+            implements Factory<IndexedRecordFacadeFactory<T, PrimitiveAsIndexedRecordFacade<T>>> {
 
         private final Class<T> mSpecificClass;
 
@@ -198,7 +198,7 @@ public class DatumRegistry {
                 throw new UnsupportedOperationException("Unmodifiable schema: " + mSchema);
             }
 
-            public Class<T> getSpecificClass() {
+            public Class<T> getDatumClass() {
                 return mSpecificClass;
             }
 
@@ -208,7 +208,7 @@ public class DatumRegistry {
             }
 
             @Override
-            public T convertFromAvro(PrimitiveAsIndexedRecordFacade<T> value) {
+            public T convertToDatum(PrimitiveAsIndexedRecordFacade<T> value) {
                 return value.get(0);
             }
         }
@@ -241,8 +241,8 @@ public class DatumRegistry {
     }
 
     /** Passes through an indexed record without modification. */
-    public static class UnconvertedIndexedRecordFacadeFactory<T extends IndexedRecord> implements
-            IndexedRecordFacadeFactory<T, IndexedRecord> {
+    public static class UnconvertedIndexedRecordFacadeFactory<T extends IndexedRecord>
+            implements IndexedRecordFacadeFactory<T, IndexedRecord> {
 
         private Schema mSchema;
 
@@ -259,7 +259,7 @@ public class DatumRegistry {
             mSchema = schema;
         }
 
-        public Class<T> getSpecificClass() {
+        public Class<T> getDatumClass() {
             return null;
         }
 
@@ -269,7 +269,7 @@ public class DatumRegistry {
         }
 
         @Override
-        public T convertFromAvro(IndexedRecord value) {
+        public T convertToDatum(IndexedRecord value) {
             return (T) value;
         }
     }
@@ -346,12 +346,12 @@ public class DatumRegistry {
         }
 
         @Override
-        public Class<T> getSpecificClass() {
+        public Class<T> getDatumClass() {
             return mSpecificClass;
         }
 
         @Override
-        public T convertFromAvro(T value) {
+        public T convertToDatum(T value) {
             return value;
         }
 
@@ -370,12 +370,12 @@ public class DatumRegistry {
         }
 
         @Override
-        public Class<BigDecimal> getSpecificClass() {
+        public Class<BigDecimal> getDatumClass() {
             return BigDecimal.class;
         }
 
         @Override
-        public BigDecimal convertFromAvro(String value) {
+        public BigDecimal convertToDatum(String value) {
             return value == null ? null : new BigDecimal(value);
         }
 
@@ -394,12 +394,12 @@ public class DatumRegistry {
         }
 
         @Override
-        public Class<BigInteger> getSpecificClass() {
+        public Class<BigInteger> getDatumClass() {
             return BigInteger.class;
         }
 
         @Override
-        public BigInteger convertFromAvro(String value) {
+        public BigInteger convertToDatum(String value) {
             return value == null ? null : new BigInteger(value);
         }
 
@@ -420,12 +420,12 @@ public class DatumRegistry {
         }
 
         @Override
-        public Class<Date> getSpecificClass() {
+        public Class<Date> getDatumClass() {
             return Date.class;
         }
 
         @Override
-        public Date convertFromAvro(Long value) {
+        public Date convertToDatum(Long value) {
             return value == null ? null : new Date(value);
         }
 
@@ -446,12 +446,12 @@ public class DatumRegistry {
         }
 
         @Override
-        public Class<InetAddress> getSpecificClass() {
+        public Class<InetAddress> getDatumClass() {
             return InetAddress.class;
         }
 
         @Override
-        public InetAddress convertFromAvro(byte[] value) {
+        public InetAddress convertToDatum(byte[] value) {
             try {
                 return value == null ? null : InetAddress.getByAddress(value);
             } catch (UnknownHostException e) {
@@ -475,12 +475,12 @@ public class DatumRegistry {
         }
 
         @Override
-        public Class<UUID> getSpecificClass() {
+        public Class<UUID> getDatumClass() {
             return UUID.class;
         }
 
         @Override
-        public UUID convertFromAvro(String value) {
+        public UUID convertToDatum(String value) {
             return value == null ? null : UUID.fromString(value);
         }
 
