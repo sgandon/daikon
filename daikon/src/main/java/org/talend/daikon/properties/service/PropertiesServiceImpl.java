@@ -94,9 +94,9 @@ public class PropertiesServiceImpl<T extends Properties> implements PropertiesSe
     }
 
     @Override
-    public String storeProperties(T properties, String name, String repositoryLocation, Schema schema) {
+    public String storeProperties(T properties, String name, String repositoryLocation, String schemaPropertyName) {
         if (repository != null) {
-            return repository.storeProperties(properties, name, repositoryLocation, schema);
+            return repository.storeProperties(properties, name, repositoryLocation, schemaPropertyName);
         }
         return null;
     }

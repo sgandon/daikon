@@ -225,22 +225,20 @@ public class PropertiesTest {
         assertTrue(f.getWidget("userId").isVisible());
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testGetValuedProperties() {
         TestProperties tProps = (TestProperties) new TestProperties("test").init();
         assertNotNull(tProps.getValuedProperty("date"));
         assertNull(tProps.getValuedProperty("nestedProps"));
-        // expected to throw exception
-        tProps.getValuedProperty("foo.nestedProps");
+        assertNull(tProps.getValuedProperty("foo.nestedProps"));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testGetProperties() {
         TestProperties tProps = (TestProperties) new TestProperties("test").init();
         assertNotNull(tProps.getProperties("nestedProps"));
         assertNull(tProps.getProperties("date"));
-        // expected to throw exception
-        tProps.getProperties("foo.nestedProps");
+        assertNull(tProps.getProperties("foo.nestedProps"));
     }
 
     @Test

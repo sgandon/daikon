@@ -472,14 +472,9 @@ public abstract class Properties extends TranslatableImpl implements AnyProperty
      * "." are property names in the nested {@link Properties} objects.
      *
      * @param name a qualified property name, should never be null
-     * @return the Property or Componenent denoted with the name or null if the final field is not found
-     * @exception IllegalArgumentException is the path before the last does not point to a CompoenentProperties
+     * @return the Property or Componenent denoted with the name or null if not found
      */
     public NamedThing getProperty(String name) {
-        // TODO make the same behaviour if the nested Properties name is not found or the last properties is
-        // not found
-        // cause right now if the Properties is not foudnt an execpetion is thrown and if the last property is
-        // not found null is returned.
         String[] propComps = name.split("\\.");
         Properties currentProps = this;
         int i = 0;
@@ -489,8 +484,8 @@ public abstract class Properties extends TranslatableImpl implements AnyProperty
             }
             NamedThing se = currentProps.getLocalProperty(prop);
             if (!(se instanceof Properties)) {
-                throw new IllegalArgumentException(prop + " is not a nested Properties. Processing: " + name);
-            } // else se is a CompoenetProperties so use it
+                return null;
+            }
             currentProps = (Properties) se;
         }
         return null;
