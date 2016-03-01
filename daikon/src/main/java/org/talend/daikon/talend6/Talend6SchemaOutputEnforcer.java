@@ -23,16 +23,20 @@ import org.talend.daikon.schema.avro.IndexedRecordAdapterFactory.UnmodifiableAda
 
 /**
  * This class acts as a wrapper around an arbitrary Avro {@link IndexedRecord} to coerce the output type to the exact
- * Java object expected by the Talend 6 Studio (which will copy the fields into a POJO in generated code).
+ * Java objects expected by the Talend 6 Studio (which will copy the fields into a POJO in generated code).
  * 
- * A wrapper like this should be attached to an input component, for example, to ensure that it's outgoing data meets
- * the Schema constraints imposed by the Studio.
+ * A wrapper like this should be attached to an input component, for example, to ensure that its outgoing data meets the
+ * Schema constraints imposed by the Studio.
+ * 
+ * One instance of this object can be created per outgoing schema and reused via the {@link #setWrapped(IndexedRecord)}
+ * method.
  */
 public class Talend6SchemaOutputEnforcer implements IndexedRecord, Talend6SchemaConstants {
 
     /** True if columns from the incoming schema are matched to the outgoing schema exclusively by position. */
     final private boolean byIndex;
 
+    /** The outgoing schema that determines which Java objects are produced. */
     final private Schema outgoing;
 
     /**
@@ -54,7 +58,7 @@ public class Talend6SchemaOutputEnforcer implements IndexedRecord, Talend6Schema
         // Find the dynamic column, if any.
         int dynamic = -1;
         for (Field f : outgoing.getFields()) {
-            if (f.getProp(TALEND6_TYPE).equals(SchemaElement.Type.DYNAMIC.name())) {
+            if (SchemaElement.Type.DYNAMIC.name().equals(f.getProp(TALEND6_TYPE))) {
                 if (dynamic != -1) {
                     // This is enforced by the Studio.
                     throw new UnsupportedOperationException("Too many dynamic columns."); //$NON-NLS-1$
@@ -65,6 +69,9 @@ public class Talend6SchemaOutputEnforcer implements IndexedRecord, Talend6Schema
         dynamicColumn = dynamic;
     }
 
+    /**
+     * @param wrapped Sets the internal, actual index record that needs to be coerced to the outgoing schema.
+     */
     public void setWrapped(IndexedRecord wrapped) {
         this.wrapped = wrapped;
     }
@@ -139,7 +146,10 @@ public class Talend6SchemaOutputEnforcer implements IndexedRecord, Talend6Schema
      * @return
      */
     private Object transformValue(Object value, Field wrappedField, Field outField) {
-        switch (SchemaElement.Type.valueOf(outField.getProp(TALEND6_DEFAULT_VALUE))) {
+        if (null == outField.getProp(TALEND6_TYPE)) {
+            return value;
+        }
+        switch (SchemaElement.Type.valueOf(outField.getProp(TALEND6_TYPE))) {
         case BOOLEAN:
             break;
         case BYTE_ARRAY:

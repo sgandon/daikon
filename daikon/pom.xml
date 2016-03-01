@@ -122,7 +122,6 @@
 							<instructions>
 								<Bundle-SymbolicName>org.talend.daikon.lib</Bundle-SymbolicName>
 								<Bundle-Name>${project.name} lib</Bundle-Name>
-								<Export-Package>org.apache.avro*</Export-Package>
 							</instructions>
 						</configuration>
 					</execution>
