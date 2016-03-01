@@ -30,9 +30,9 @@ public class PropertiesDynamicMethodHelper {
     static boolean REQUIRED = true;
 
     static Method findMethod(Object obj, String type, String propertyName, boolean required) {
-        if (propertyName == null) {
+        if (propertyName == null || "".equals(propertyName)) {
             throw new IllegalArgumentException(
-                    "The ComponentService was used to access a property with a null property name. Type: " + type
+                    "The ComponentService was used to access a property with a null(or empty) property name. Type: " + type
                             + " Properties: " + obj);
         }
         String propName = propertyName.substring(0, 1).toUpperCase() + propertyName.substring(1);

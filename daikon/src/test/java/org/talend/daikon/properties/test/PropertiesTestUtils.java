@@ -16,8 +16,11 @@ import static org.hamcrest.CoreMatchers.*;
 // import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.*;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
+import org.apache.commons.lang.StringUtils;
 import org.junit.rules.ErrorCollector;
 import org.talend.daikon.NamedThing;
 import org.talend.daikon.properties.AnyPropertyVisitor;
@@ -112,6 +115,33 @@ public class PropertiesTestUtils {
             }, null);
 
         }
+    }
+
+    /**
+     * generate the list of nested class that are of type Properties and format them to used in the Component Definition
+     * to tell which are the supported nested classes. The output is formated to have hyper links in Eclipse
+     * 
+     * @param prop the property to parse
+     * @return the sting comma separated list of nested Proerties classes.
+     */
+    static public String generatedNestedComponentCompatibilitiesJavaCode(final Properties prop) {
+        final Set<String> classSet = new HashSet<>();
+        prop.accept(new AnyPropertyVisitor() {
+
+            @Override
+            public void visit(Properties properties, Properties parent) {
+                if (properties != prop) {
+                    classSet.add(properties.getClass().getSimpleName() + ".class");
+                } // else do not list the prop class itself
+            }
+
+            @Override
+            public void visit(Property property, Properties parent) {
+                // not needed
+
+            }
+        }, null);
+        return StringUtils.join(classSet, ", ");
     }
 
 }

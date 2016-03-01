@@ -18,8 +18,8 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * default implmentation of the ErrorCode Interface. This is not suposed to be used as it but rather used as a delegate
- * for an Enum creation. see {@link CommonErrorCodes}
+ * Default implementation of the ErrorCode Interface. This is not supposed to be used as it but rather used as a delegate
+ * for an Enum creation. See {@link CommonErrorCodes}
  */
 public class DefaultErrorCode implements ErrorCode {
 
