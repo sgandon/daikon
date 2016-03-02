@@ -15,6 +15,7 @@ package org.talend.daikon.talend6;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.avro.JsonProperties;
 import org.apache.avro.Schema;
 import org.apache.avro.Schema.Field;
 import org.apache.avro.generic.IndexedRecord;
@@ -180,5 +181,13 @@ public class Talend6SchemaOutputEnforcer implements IndexedRecord, Talend6Schema
             break;
         }
         return value;
+    }
+
+    /**
+     * @Return true if the Avro object (usually a Field or a Record) has been tagged with a type, and the type is
+     * DYNAMIC.
+     */
+    public static boolean isDynamic(JsonProperties f) {
+        return SchemaElement.Type.DYNAMIC.equals(SchemaElement.Type.valueOf(f.getProp(TALEND6_TYPE)));
     }
 }
