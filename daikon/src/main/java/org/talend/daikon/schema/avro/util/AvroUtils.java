@@ -1,7 +1,9 @@
 package org.talend.daikon.schema.avro.util;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.avro.Schema;
 import org.apache.avro.Schema.Type;
@@ -52,6 +54,13 @@ public class AvroUtils {
             }
         }
         return schema;
+    }
+
+    public static Map<String, Schema.Field> makeFieldMap(Schema schema) {
+        Map<String, Schema.Field> map = new HashMap<>();
+        for (Schema.Field field : schema.getFields())
+             map.put(field.name(), field);
+        return map;
     }
 
 }

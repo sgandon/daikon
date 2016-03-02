@@ -120,7 +120,7 @@
 						</goals>
 						<configuration>
 							<instructions>
-								<Bundle-SymbolicName>org.talend.daikon.lib</Bundle-SymbolicName>
+								<Bundle-SymbolicName>org.talend.daikon</Bundle-SymbolicName>
 								<Bundle-Name>${project.name} lib</Bundle-Name>
 							</instructions>
 						</configuration>
