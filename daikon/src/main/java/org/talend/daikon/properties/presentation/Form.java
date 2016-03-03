@@ -24,14 +24,13 @@ import org.talend.daikon.i18n.I18nMessages;
 import org.talend.daikon.properties.Properties;
 import org.talend.daikon.properties.PropertiesDynamicMethodHelper;
 import org.talend.daikon.properties.Property;
-import org.talend.daikon.schema.SchemaElement;
 import org.talend.daikon.strings.ToStringIndent;
 import org.talend.daikon.strings.ToStringIndentUtil;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 /**
- * Represents a collection of components {@link SchemaElement} objects that are grouped into a form for display. This
+ * Represents a collection of components {@link Property} objects that are grouped into a form for display. This
  * form can be manifested for example as a tab in a view, a dialog, or a page in a wizard.
  */
 public class Form extends SimpleNamedThing implements ToStringIndent {

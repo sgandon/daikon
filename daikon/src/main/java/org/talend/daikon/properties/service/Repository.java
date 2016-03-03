@@ -13,7 +13,6 @@
 package org.talend.daikon.properties.service;
 
 import org.talend.daikon.properties.Properties;
-import org.talend.daikon.schema.Schema;
 
 /**
  * A design-time interface to the repository to allow {@link Properties} to be stored.

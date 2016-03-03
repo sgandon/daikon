@@ -13,7 +13,6 @@
 package org.talend.daikon.talend6;
 
 import org.apache.avro.Schema;
-import org.talend.daikon.schema.SchemaElement;
 
 /**
  * Constants that can be used as keys in an Avro {@link Schema} properties in order to remain feature-equivalent to the
@@ -27,7 +26,6 @@ public interface Talend6SchemaConstants {
 
     public final static String TALEND6_TITLE = "talend6.title"; //$NON-NLS-1$
 
-    /** Value is {@link SchemaElement.Type#name()}. */
     public final static String TALEND6_TYPE = "talend6.type"; //$NON-NLS-1$
 
     /** Omitted if -1. */

@@ -15,7 +15,7 @@ package org.talend.daikon.properties.presentation;
 import java.util.Collection;
 
 import org.talend.daikon.NamedThing;
-import org.talend.daikon.schema.SchemaElement;
+import org.talend.daikon.properties.Property;
 import org.talend.daikon.strings.ToStringIndent;
 import org.talend.daikon.strings.ToStringIndentUtil;
 
@@ -264,8 +264,8 @@ public class Widget implements ToStringIndent {
         if (n instanceof Form) {
             sb.append(" (props: " + ((Form) n).getProperties().getName() + ")");
         }
-        if (n instanceof SchemaElement) {
-            Collection values = ((SchemaElement) n).getPossibleValues();
+        if (n instanceof Property) {
+            Collection values = ((Property) n).getPossibleValues();
             if (values != null) {
                 sb.append(" Values: " + values);
             }

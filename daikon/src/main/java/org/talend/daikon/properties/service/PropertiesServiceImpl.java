@@ -15,7 +15,6 @@ package org.talend.daikon.properties.service;
 import org.talend.daikon.properties.Properties;
 import org.talend.daikon.properties.PropertiesDynamicMethodHelper;
 import org.talend.daikon.properties.presentation.Form;
-import org.talend.daikon.schema.Schema;
 
 /**
  * Main Component Service implementation that is not related to any framework (neither OSGI, nor Spring) it uses a
