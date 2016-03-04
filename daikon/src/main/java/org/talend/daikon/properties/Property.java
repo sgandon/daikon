@@ -21,7 +21,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.avro.Schema;
 import org.talend.daikon.SimpleNamedThing;
 import org.talend.daikon.exception.TalendRuntimeException;
 import org.talend.daikon.strings.ToStringIndentUtil;
@@ -69,7 +68,6 @@ public class Property extends SimpleNamedThing implements AnyProperty {
          */
         SUPPRESS_LOGGING;
     };
-
 
     private Type type;
 
@@ -276,7 +274,6 @@ public class Property extends SimpleNamedThing implements AnyProperty {
         return null;
     }
 
-
     public Map<String, Property> getChildMap() {
         Map<String, Property> map = new HashMap<>();
         for (Property se : getChildren()) {
@@ -310,7 +307,7 @@ public class Property extends SimpleNamedThing implements AnyProperty {
         if (getType() == Type.SCHEMA && value instanceof String) {
             // Needs to use a serialized Avro schema
             TalendRuntimeException.unexpectedException("implement me");
-            //valueToSet = SchemaFactory.fromSerialized((String) value);
+            // valueToSet = SchemaFactory.fromSerialized((String) value);
         }
         storedValue = valueToSet;
     }
@@ -340,17 +337,12 @@ public class Property extends SimpleNamedThing implements AnyProperty {
     }
 
     /**
-     * @return cast the getValue() into a String. if the property is a Schema then it is serialized before being
-     * returned.
+     * @return cast the getValue() into a String.
      */
     public String getStringValue() {
         Object value = getValue();
         if (value != null) {
-            if (value instanceof Schema) {
-                TalendRuntimeException.unexpectedException("implement me");
-                // FIXME
-                //return ((Schema) value).toSerialized();
-            }
+            // Schemas are serialized to JSON String via their built-in toString() method.
             return String.valueOf(value);
         }
         return null;
@@ -369,8 +361,9 @@ public class Property extends SimpleNamedThing implements AnyProperty {
 
     public Calendar getCalendarValue() {
         Object value = getValue();
-        if (value instanceof Calendar)
+        if (value instanceof Calendar) {
             return (Calendar) value;
+        }
         if (value instanceof Date) {
             Calendar calendar = Calendar.getInstance();
             calendar.setTime((Date) value);
@@ -427,6 +420,5 @@ public class Property extends SimpleNamedThing implements AnyProperty {
     public String toStringIndent(int indent) {
         return ToStringIndentUtil.indentString(indent) + getName();
     }
-
 
 }
