@@ -3,9 +3,13 @@ package org.talend.daikon.avro.util;
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.*;
 
+import org.apache.avro.LogicalType;
 import org.apache.avro.Schema;
 import org.apache.avro.SchemaBuilder;
 import org.junit.Test;
+import org.talend.daikon.avro.SchemaConstants;
+
+import java.util.Map;
 
 /**
  * Unit tests for {AvroUtils}.
@@ -52,6 +56,27 @@ public class AvroUtilsTest {
         // A union with three elements, none nullable, is passed through.
         Schema mixWithNoNullable = SchemaBuilder.builder().unionOf().booleanType().and().doubleType().and().intType().endUnion();
         assertThat(AvroUtils.unwrapIfNullable(mixWithNoNullable), sameInstance(mixWithNoNullable));
+    }
+
+    @Test
+    public void testIsDynamic() {
+        Schema s = SchemaBuilder.record("dynamic").fields().endRecord();
+        LogicalType lt = new LogicalType(SchemaConstants.LOGICAL_DYNAMIC);
+        lt.addToSchema(s);
+        assertTrue(AvroUtils.isDynamic(s));
+    }
+
+    @Test
+    public void testMakeFieldMap() {
+
+        Schema s = SchemaBuilder.record("test")
+                .fields()
+                .name("field1").type().booleanType().noDefault()
+                .name("field2").type().stringType().noDefault()
+                .endRecord();
+        Map map = AvroUtils.makeFieldMap(s);
+        assertEquals("field1", ((Schema.Field)map.get("field1")).name());
+        assertEquals("field2", ((Schema.Field)map.get("field2")).name());
     }
 
 }

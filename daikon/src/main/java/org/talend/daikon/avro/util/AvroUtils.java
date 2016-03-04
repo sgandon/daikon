@@ -8,6 +8,7 @@ import java.util.Map;
 import org.apache.avro.Schema;
 import org.apache.avro.Schema.Type;
 import org.apache.avro.SchemaBuilder;
+import org.talend.daikon.avro.SchemaConstants;
 
 /**
  * Helper methods for accessing Avro {@link Schema} and Avro-compatible objects.
@@ -59,8 +60,12 @@ public class AvroUtils {
     public static Map<String, Schema.Field> makeFieldMap(Schema schema) {
         Map<String, Schema.Field> map = new HashMap<>();
         for (Schema.Field field : schema.getFields())
-             map.put(field.name(), field);
+            map.put(field.name(), field);
         return map;
+    }
+
+    public static boolean isDynamic(Schema schema) {
+        return schema.getType() == Type.RECORD && schema.getLogicalType().getName().equals(SchemaConstants.LOGICAL_DYNAMIC);
     }
 
 }
