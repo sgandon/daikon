@@ -42,18 +42,18 @@ public interface Talend6SchemaConstants {
      * Table custom properties. ---------------------------------------------
      */
 
-    public final static String TALEND6_TABLE_DBMS = "talend6.table.dbms"; //$NON-NLS-1$
+    // public final static String TALEND6_TABLE_DBMS = "talend6.table.dbms"; //$NON-NLS-1$
 
     public final static String TALEND6_TABLE_NAME = "talend6.table.name"; //$NON-NLS-1$
 
     public final static String TALEND6_TABLE_TYPE = "talend6.table.type"; //$NON-NLS-1$
 
-    public final static String TALEND6_TABLE_ATTACHED_CONNECTOR = "talend6.table.attachedConnector"; //$NON-NLS-1$
+    // public final static String TALEND6_TABLE_ATTACHED_CONNECTOR = "talend6.table.attachedConnector"; //$NON-NLS-1$
 
-    public final static String TALEND6_TABLE_READ_ONLY_COLUMN_POSITION = "talend6.table.readOnlyColumnPosition"; //$NON-NLS-1$
+    // public final static String TALEND6_TABLE_READ_ONLY_COLUMN_POSITION = "talend6.table.readOnlyColumnPosition"; //$NON-NLS-1$
 
     /** Value is the label of the dynamic column. */
-    public final static String TALEND6_TABLE_DYNAMIC_COLUMN = "talend6.table.dynamicColumn"; //$NON-NLS-1$
+    // public final static String TALEND6_TABLE_DYNAMIC_COLUMN = "talend6.table.dynamicColumn"; //$NON-NLS-1$
 
     /*
      * Column custom properties. --------------------------------------------
@@ -62,7 +62,7 @@ public interface Talend6SchemaConstants {
     /** Property is present if key, otherwise not present. */
     public final static String TALEND6_COLUMN_IS_KEY = "talend6.column.isKey"; //$NON-NLS-1$
 
-    public final static String TALEND6_COLUMN_TYPE = "talend6.column.type"; //$NON-NLS-1$
+    public final static String TALEND6_COLUMN_SOURCE_TYPE = "talend6.column.sourceType"; //$NON-NLS-1$
 
     public final static String TALEND6_COLUMN_TALEND_TYPE = "talend6.column.talendType"; //$NON-NLS-1$
 
@@ -83,7 +83,7 @@ public interface Talend6SchemaConstants {
     public final static String TALEND6_COLUMN_DEFAULT = "talend6.column.default"; //$NON-NLS-1$
 
     /** Property is present if custom, otherwise not present. */
-    public final static String TALEND6_COLUMN_IS_CUSTOM = "talend6.column.custom"; //$NON-NLS-1$
+    // public final static String TALEND6_COLUMN_IS_CUSTOM = "talend6.column.custom"; //$NON-NLS-1$
 
     public final static String TALEND6_COLUMN_ORIGINAL_DB_COLUMN_NAME = "talend6.column.dbColumnName"; //$NON-NLS-1$
 
@@ -91,9 +91,9 @@ public interface Talend6SchemaConstants {
 
     public final static String TALEND6_COLUMN_RELATIONSHIP_TYPE = "talend6.column.relationshipType"; //$NON-NLS-1$
 
-    public final static String TALEND6_COLUMN_EXPRESSION = "talend6.column.expression"; //$NON-NLS-1$
+    // public final static String TALEND6_COLUMN_EXPRESSION = "talend6.column.expression"; //$NON-NLS-1$
 
     /** Property is present if useful, otherwise not present. */
-    public final static String TALEND6_COLUMN_IS_USEFUL = "talend6.column.isUseful"; //$NON-NLS-1$
+    // public final static String TALEND6_COLUMN_IS_USEFUL = "talend6.column.isUseful"; //$NON-NLS-1$
 
 }

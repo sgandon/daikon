@@ -16,6 +16,23 @@ import org.talend.daikon.avro.SchemaConstants;
 public class AvroUtils {
 
     /**
+     * @return Given any Schema, return whether the null value is possible.
+     */
+    public static boolean isNullable(Schema schema) {
+        if (schema.getType() == Schema.Type.NULL) {
+            return true;
+        }
+        if (schema.getType() == Schema.Type.UNION) {
+            for (Schema unionType : schema.getTypes()) {
+                if (schema.getType() == Schema.Type.NULL) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
      * @return Given any Schema, return the schema as a {@link Schema.Type#UNION} containing {@link Schema.Type#NULL} as
      * an option.
      */
@@ -23,8 +40,9 @@ public class AvroUtils {
         if (schema.getType() == Schema.Type.UNION) {
             // TODO(rskraba): The nullable schema can be a singleton?
             List<Schema> unionTypes = schema.getTypes();
-            if (unionTypes.contains(Schema.create(Schema.Type.NULL)))
+            if (unionTypes.contains(Schema.create(Schema.Type.NULL))) {
                 return schema;
+            }
 
             ArrayList<Schema> typesWithNullable = new ArrayList<>(unionTypes);
             typesWithNullable.add(Schema.create(Schema.Type.NULL));
@@ -59,8 +77,9 @@ public class AvroUtils {
 
     public static Map<String, Schema.Field> makeFieldMap(Schema schema) {
         Map<String, Schema.Field> map = new HashMap<>();
-        for (Schema.Field field : schema.getFields())
+        for (Schema.Field field : schema.getFields()) {
             map.put(field.name(), field);
+        }
         return map;
     }
 
