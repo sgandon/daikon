@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.avro.LogicalType;
 import org.apache.avro.Schema;
 import org.apache.avro.Schema.Type;
 import org.apache.avro.SchemaBuilder;
@@ -84,7 +85,14 @@ public class AvroUtils {
     }
 
     public static boolean isDynamic(Schema schema) {
-        return schema.getType() == Type.RECORD && schema.getLogicalType().getName().equals(SchemaConstants.LOGICAL_DYNAMIC);
+        return schema.getType() == Type.BYTES && schema.getLogicalType().getName().equals(SchemaConstants.LOGICAL_DYNAMIC);
+    }
+
+    public static Schema.Field setFieldDynamic(Schema.Field field) {
+        LogicalType lt = new LogicalType(SchemaConstants.LOGICAL_DYNAMIC);
+        Schema fs = field.schema();
+        lt.addToSchema(fs);
+        return field;
     }
 
 }

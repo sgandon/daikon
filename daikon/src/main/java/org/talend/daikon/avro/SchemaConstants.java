@@ -8,7 +8,7 @@ import org.apache.avro.Schema.Type;
 public class SchemaConstants {
 
     /**
-     * A dynamic schema field. The Avro type for this is {@link Type.RECORD}
+     * A dynamic schema field. The Avro type for this is Type.BYTES
      */
     public static final String LOGICAL_DYNAMIC = "dynamic";
 

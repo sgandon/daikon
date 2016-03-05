@@ -60,10 +60,9 @@ public class AvroUtilsTest {
 
     @Test
     public void testIsDynamic() {
-        Schema s = SchemaBuilder.record("dynamic").fields().endRecord();
-        LogicalType lt = new LogicalType(SchemaConstants.LOGICAL_DYNAMIC);
-        lt.addToSchema(s);
-        assertTrue(AvroUtils.isDynamic(s));
+        Schema s = SchemaBuilder.record("dynamic").fields().name("field1").type().bytesType().noDefault().endRecord();
+        Schema fs = AvroUtils.setFieldDynamic(s.getField("field1")).schema();
+        assertTrue(AvroUtils.isDynamic(fs));
     }
 
     @Test

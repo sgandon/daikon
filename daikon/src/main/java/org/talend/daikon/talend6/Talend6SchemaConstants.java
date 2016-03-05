@@ -53,7 +53,7 @@ public interface Talend6SchemaConstants {
     // public final static String TALEND6_TABLE_READ_ONLY_COLUMN_POSITION = "talend6.table.readOnlyColumnPosition"; //$NON-NLS-1$
 
     /** Value is the label of the dynamic column. */
-    // public final static String TALEND6_TABLE_DYNAMIC_COLUMN = "talend6.table.dynamicColumn"; //$NON-NLS-1$
+    public final static String TALEND6_TABLE_DYNAMIC_COLUMN = "talend6.table.dynamicColumn"; //$NON-NLS-1$
 
     /*
      * Column custom properties. --------------------------------------------
@@ -95,5 +95,10 @@ public interface Talend6SchemaConstants {
 
     /** Property is present if useful, otherwise not present. */
     // public final static String TALEND6_COLUMN_IS_USEFUL = "talend6.column.isUseful"; //$NON-NLS-1$
+
+    public final static String TALEND6_PATTERN = "talend6.pattern"; //$NON-NLS-1$
+    public final static String TALEND6_SIZE = "talend6.size"; //$NON-NLS-1$
+    public final static String TALEND6_PRECISION = "talend6.precision"; //$NON-NLS-1$
+    public final static String TALEND6_DEFAULT_VALUE = "talend6.default.value"; //$NON-NLS-1$
 
 }
