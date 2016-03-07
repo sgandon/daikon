@@ -21,8 +21,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.avro.Schema;
 import org.talend.daikon.SimpleNamedThing;
-import org.talend.daikon.exception.TalendRuntimeException;
 import org.talend.daikon.strings.ToStringIndentUtil;
 
 /**
@@ -304,10 +304,8 @@ public class Property extends SimpleNamedThing implements AnyProperty {
 
     public void setValue(Object value) {
         Object valueToSet = value;
-        if (getType() == Type.SCHEMA && value instanceof String) {
-            // Needs to use a serialized Avro schema
-            TalendRuntimeException.unexpectedException("implement me");
-            // valueToSet = SchemaFactory.fromSerialized((String) value);
+        if (value != null && getType() == Type.SCHEMA && value instanceof Schema) {
+            valueToSet = value.toString();
         }
         storedValue = valueToSet;
     }

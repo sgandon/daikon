@@ -8,10 +8,10 @@ import org.apache.avro.Schema.Field;
 import org.apache.avro.generic.IndexedRecord;
 import org.apache.avro.reflect.ReflectData;
 import org.apache.avro.specific.SpecificData;
+import org.talend.daikon.avro.AvroConverter;
 import org.talend.daikon.avro.IndexedRecordAdapterFactory;
 import org.talend.daikon.avro.container.ContainerReaderByIndex;
 import org.talend.daikon.avro.container.ContainerWriterByIndex;
-import org.talend.daikon.avro.AvroConverter;
 
 /**
  * This abstract base class provides an implementation of an {@link IndexedRecordAdapterFactory} that caches the maximum
@@ -79,7 +79,8 @@ public abstract class CachedAdapterFactoryBase<ContainerDataSpecT, FieldDataSpec
         this.schema = schema;
         if (schema != null) {
             // Initialized on the first convertToAvro or convertToDatum call.
-            fieldType = (FieldDataSpecT[]) Array.newInstance(fieldDataSpecClass, AvroUtils.unwrapIfNullable(schema).getFields().size());
+            fieldType = (FieldDataSpecT[]) Array.newInstance(fieldDataSpecClass, AvroUtils.unwrapIfNullable(schema).getFields()
+                    .size());
             // Initialized on the first get(i) call on the indexed record for that field.
             fieldConverter = new AvroConverter[fieldType.length];
         } else {
