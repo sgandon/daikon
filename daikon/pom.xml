@@ -106,6 +106,7 @@
 						<configuration>
 							<classifier>bundle</classifier>
 							<instructions>
+                                <DynamicImport-Package>*</DynamicImport-Package>							
 								<Service-Component>*</Service-Component>
 								<Embed-Transitive>true</Embed-Transitive>
 								<Embed-Dependency>*;artifactId=paranamer|snappy-java|commons-compress|xz;inline=true</Embed-Dependency>
