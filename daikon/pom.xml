@@ -109,6 +109,7 @@
 								<Service-Component>*</Service-Component>
 								<Embed-Transitive>true</Embed-Transitive>
 								<Embed-Dependency>*;artifactId=avro|jackson-core-asl|jackson-mapper-asl|paranamer|snappy-java|commons-compress|xz;inline=true</Embed-Dependency>
+								<Import-Package>!sun.misc,*</Import-Package>
 							</instructions>
 						</configuration>
 					</execution>
