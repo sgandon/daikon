@@ -18,7 +18,7 @@ import org.talend.daikon.avro.SchemaConstants;
 /**
  * Constants that can be used as keys in an Avro {@link Schema} properties in order to remain feature-equivalent to the
  * existing Talend 6 IMetadataTable.
- * 
+ * <p>
  * Values that are null are always omitted from the properties. The type of the value is always String.
  */
 public interface Talend6SchemaConstants {
@@ -33,10 +33,14 @@ public interface Talend6SchemaConstants {
 
     public final static String TALEND6_LABEL = "talend6.table.label"; //$NON-NLS-1$
 
-    /** Property is present if readonly, otherwise not present. */
+    /**
+     * Property is present if readonly, otherwise not present.
+     */
     public final static String TALEND6_IS_READ_ONLY = "talend6.table.readOnly"; //$NON-NLS-1$
 
-    /** The key will have this as a prefix, pointing to the value. */
+    /**
+     * The key will have this as a prefix, pointing to the value.
+     */
     public final static String TALEND6_ADDITIONAL_PROPERTIES = "talend6.prop."; //$NON-NLS-1$
 
     /*
@@ -47,14 +51,13 @@ public interface Talend6SchemaConstants {
 
     public final static String TALEND6_TABLE_TYPE = "talend6.table.type"; //$NON-NLS-1$
 
-    /** Value is the label of the dynamic column. */
-    public final static String TALEND6_TABLE_DYNAMIC_COLUMN = "talend6.table.dynamicColumn"; //$NON-NLS-1$
-
     /*
      * Column custom properties. --------------------------------------------
      */
 
-    /** Property is present if key, otherwise not present. */
+    /**
+     * Property is present if key, otherwise not present.
+     */
     public final static String TALEND6_COLUMN_IS_KEY = "talend6.column.isKey"; //$NON-NLS-1$
 
     public final static String TALEND6_COLUMN_SOURCE_TYPE = SchemaConstants.TALEND_COLUMN_DB_TYPE;
@@ -63,16 +66,24 @@ public interface Talend6SchemaConstants {
 
     public final static String TALEND6_COLUMN_PATTERN = SchemaConstants.TALEND_COLUMN_PATTERN;
 
-    /** String representation of an int. */
+    /**
+     * String representation of an int.
+     */
     public final static String TALEND6_COLUMN_LENGTH = SchemaConstants.TALEND_COLUMN_DB_LENGTH;
 
-    /** String representation of an int. */
+    /**
+     * String representation of an int.
+     */
     public final static String TALEND6_COLUMN_ORIGINAL_LENGTH = "talend6.column.originalLength"; //$NON-NLS-1$
 
-    /** Property is present if nullable, otherwise not present. */
+    /**
+     * Property is present if nullable, otherwise not present.
+     */
     public final static String TALEND6_COLUMN_IS_NULLABLE = "talend6.column.isNullable"; //$NON-NLS-1$
 
-    /** String representation of an int. */
+    /**
+     * String representation of an int.
+     */
     public final static String TALEND6_COLUMN_PRECISION = SchemaConstants.TALEND_COLUMN_PRECISION;
 
     public final static String TALEND6_COLUMN_DEFAULT = SchemaConstants.TALEND_COLUMN_DEFAULT;

@@ -1,15 +1,15 @@
 package org.talend.daikon.avro.util;
 
-import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.*;
-
-import org.apache.avro.LogicalType;
 import org.apache.avro.Schema;
 import org.apache.avro.SchemaBuilder;
 import org.junit.Test;
-import org.talend.daikon.avro.SchemaConstants;
+import org.talend.daikon.avro.DynamicTypeFactory;
 
 import java.util.Map;
+
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.sameInstance;
+import static org.junit.Assert.*;
 
 /**
  * Unit tests for {AvroUtils}.
@@ -58,12 +58,6 @@ public class AvroUtilsTest {
         assertThat(AvroUtils.unwrapIfNullable(mixWithNoNullable), sameInstance(mixWithNoNullable));
     }
 
-    @Test
-    public void testIsDynamic() {
-        Schema s = SchemaBuilder.record("dynamic").fields().name("field1").type().bytesType().noDefault().endRecord();
-        Schema fs = AvroUtils.setFieldDynamic(s.getField("field1")).schema();
-        assertTrue(AvroUtils.isDynamic(fs));
-    }
 
     @Test
     public void testMakeFieldMap() {
@@ -74,8 +68,16 @@ public class AvroUtilsTest {
                 .name("field2").type().stringType().noDefault()
                 .endRecord();
         Map map = AvroUtils.makeFieldMap(s);
-        assertEquals("field1", ((Schema.Field)map.get("field1")).name());
-        assertEquals("field2", ((Schema.Field)map.get("field2")).name());
+        assertEquals("field1", ((Schema.Field) map.get("field1")).name());
+        assertEquals("field2", ((Schema.Field) map.get("field2")).name());
+    }
+
+    @Test
+    public void testHasDynamicField() {
+        Schema s = SchemaBuilder.record("dynamic").fields().name("field1").type().nullType().noDefault().endRecord();
+        assertFalse(AvroUtils.hasDynamicField(s));
+        s = SchemaBuilder.record("dynamic").fields().name("field1").type(DynamicTypeFactory.getDynamic()).noDefault().endRecord();
+        assertTrue(AvroUtils.hasDynamicField(s));
     }
 
 }

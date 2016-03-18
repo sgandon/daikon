@@ -1,15 +1,14 @@
 package org.talend.daikon.avro.util;
 
+import org.apache.avro.Schema;
+import org.apache.avro.Schema.Type;
+import org.apache.avro.SchemaBuilder;
+import org.talend.daikon.avro.DynamicTypeFactory;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import org.apache.avro.LogicalType;
-import org.apache.avro.Schema;
-import org.apache.avro.Schema.Type;
-import org.apache.avro.SchemaBuilder;
-import org.talend.daikon.avro.SchemaConstants;
 
 /**
  * Helper methods for accessing Avro {@link Schema} and Avro-compatible objects.
@@ -84,15 +83,13 @@ public class AvroUtils {
         return map;
     }
 
-    public static boolean isDynamic(Schema schema) {
-        return schema.getType() == Type.BYTES && schema.getLogicalType().getName().equals(SchemaConstants.LOGICAL_DYNAMIC);
-    }
-
-    public static Schema.Field setFieldDynamic(Schema.Field field) {
-        LogicalType lt = new LogicalType(SchemaConstants.LOGICAL_DYNAMIC);
-        Schema fs = field.schema();
-        lt.addToSchema(fs);
-        return field;
+    public static boolean hasDynamicField(Schema schema) {
+        for (Schema.Field field : schema.getFields()) {
+            if (DynamicTypeFactory.isDynamic(field.schema())) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }

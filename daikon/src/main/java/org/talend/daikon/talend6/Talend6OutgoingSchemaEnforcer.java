@@ -12,38 +12,39 @@
 // ============================================================================
 package org.talend.daikon.talend6;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import org.apache.avro.Schema;
 import org.apache.avro.Schema.Field;
 import org.apache.avro.generic.IndexedRecord;
+import org.talend.daikon.avro.DynamicTypeFactory;
 import org.talend.daikon.avro.IndexedRecordAdapterFactory.UnmodifiableAdapterException;
 import org.talend.daikon.avro.util.SingleColumnIndexedRecordAdapterFactory;
+
+import java.util.*;
 
 /**
  * This class acts as a wrapper around an arbitrary Avro {@link IndexedRecord} to coerce the output type to the exact
  * Java objects expected by the Talend 6 Studio (which will copy the fields into a POJO in generated code).
- * 
+ * <p>
  * A wrapper like this should be attached to an input component, for example, to ensure that its outgoing data meets the
  * Schema constraints imposed by the Studio, including:
  * <ul>
  * <li>Coercing the types of the returned objects to *exactly* the type required by the Talend POJO.</li>
  * <li>Placing all of the unresolved columns between the wrapped schema and the output schema in the Dynamic column.</li>
  * </ul>
- * 
+ * <p>
  * One instance of this object can be created per outgoing schema and reused via the {@link #setWrapped(IndexedRecord)}
  * method.
  */
 public class Talend6OutgoingSchemaEnforcer implements IndexedRecord, Talend6SchemaConstants {
 
-    /** True if columns from the incoming schema are matched to the outgoing schema exclusively by position. */
+    /**
+     * True if columns from the incoming schema are matched to the outgoing schema exclusively by position.
+     */
     private boolean byIndex;
 
-    /** The outgoing schema that determines which Java objects are produced. */
+    /**
+     * The outgoing schema that determines which Java objects are produced.
+     */
     private final Schema outgoing;
 
     /**
@@ -64,7 +65,6 @@ public class Talend6OutgoingSchemaEnforcer implements IndexedRecord, Talend6Sche
      */
     private Map<String, Integer> dynamicColumnSources;
 
-    public static final String TALEND6_DYNAMIC_TYPE = "id_Dynamic"; //$NON-NLS-1$
 
     public Talend6OutgoingSchemaEnforcer(Schema outgoing, boolean byIndex) {
         this.outgoing = outgoing;
@@ -73,7 +73,7 @@ public class Talend6OutgoingSchemaEnforcer implements IndexedRecord, Talend6Sche
         // Find the dynamic column, if any.
         int dynamic = -1;
         for (Field f : outgoing.getFields()) {
-            if (TALEND6_DYNAMIC_TYPE.equals(f.getProp(TALEND6_COLUMN_TALEND_TYPE))) {
+            if (DynamicTypeFactory.isDynamic(f.schema())) {
                 if (dynamic != -1) {
                     // This is enforced by the Studio.
                     throw new UnsupportedOperationException("Too many dynamic columns."); //$NON-NLS-1$
@@ -101,7 +101,9 @@ public class Talend6OutgoingSchemaEnforcer implements IndexedRecord, Talend6Sche
         return outgoing;
     }
 
-    /** Return a copy of the outgoing schema without any dynamic column. */
+    /**
+     * Return a copy of the outgoing schema without any dynamic column.
+     */
     public Schema getSchemaWithoutDynamic() {
         if (outgoingDynamicColumn == -1) {
             return outgoing;
@@ -185,11 +187,11 @@ public class Talend6OutgoingSchemaEnforcer implements IndexedRecord, Talend6Sche
     }
 
     /**
-     * @param value The incoming value for the field. This can be null when null is a valid value, or if there is no
-     * corresponding wrapped field.
+     * @param value        The incoming value for the field. This can be null when null is a valid value, or if there is no
+     *                     corresponding wrapped field.
      * @param wrappedField The incoming field description (a valid Avro Schema). This can be null if there is no
-     * corresponding wrapped field.
-     * @param outField The outgoing field description that must be enforced. This must not be null.
+     *                     corresponding wrapped field.
+     * @param outField     The outgoing field description that must be enforced. This must not be null.
      * @return
      */
     private Object transformValue(Object value, Field wrappedField, Field outField) {
@@ -208,7 +210,9 @@ public class Talend6OutgoingSchemaEnforcer implements IndexedRecord, Talend6Sche
         return value;
     }
 
-    /** @return the number of columns that will be placed in the dynamic holder. */
+    /**
+     * @return the number of columns that will be placed in the dynamic holder.
+     */
     private int getNumberOfDynamicColumns() {
         int dynColN = wrapped.getSchema().getFields().size() - getSchema().getFields().size() + 1;
         if (dynColN < 0) {
@@ -255,10 +259,4 @@ public class Talend6OutgoingSchemaEnforcer implements IndexedRecord, Talend6Sche
         return result;
     }
 
-    /**
-     * @Return true if the Avro Field has been tagged with a type, and the type is DYNAMIC.
-     */
-    public static boolean isDynamic(Field f) {
-        return TALEND6_DYNAMIC_TYPE.equals(f.getProp(TALEND6_COLUMN_TALEND_TYPE));
-    }
 }
